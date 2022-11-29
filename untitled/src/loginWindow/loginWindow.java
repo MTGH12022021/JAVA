@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class loginWindow extends JDialog{
     private JTextField username;
-    private JTextField passwordTextField;
+    private JTextField password;
     private JButton Login;
     private JButton signup;
     private JPanel loginPanel;
