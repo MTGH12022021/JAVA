@@ -1,4 +1,4 @@
-import settingForOneToOneWindow.settingForOneToOneWindow;
+package changenameWindow;
 
 import javax.swing.*;
 import java.awt.*;
