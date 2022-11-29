@@ -13,7 +13,7 @@ public class loginHistoryOfNicknameWindow extends JDialog{
     public loginHistoryOfNicknameWindow(JFrame parent){
         super(parent);
         createTable();
-        setTitle("Login");
+        setTitle("Login history of individual");
         setContentPane(loginHistoryOfNicknamePanel);
         setMinimumSize(new Dimension(450, 474));
         setModal(true);

@@ -13,7 +13,7 @@ public class loginHistoryWindow extends JDialog{
     public loginHistoryWindow(JFrame parent){
         super(parent);
         createTable();
-        setTitle("Login");
+        setTitle("Login history of the app");
         setContentPane(historyTablePanel);
         setMinimumSize(new Dimension(450, 474));
         setModal(true);
