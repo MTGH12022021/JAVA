@@ -1,5 +1,6 @@
 package settingForChatRoomWindow;
 
+import addANewPersonWindow.addANewPersonWindow;
 import settingForOneToOneWindow.settingForOneToOneWindow;
 
 import javax.swing.*;
@@ -11,17 +12,22 @@ public class settingForChatRoomWindow extends JDialog{
     private JButton changeAvatarButton;
     private JButton deleteThisRoomButton;
     private JPanel settingForChatRoomPanel;
-    public settingForChatRoomWindow(JFrame parent){
-        super(parent);
-        setTitle("Setting for this conversation");
-        setContentPane(settingForChatRoomPanel);
-        setMinimumSize(new Dimension(450, 474));
-        setModal(true);
-        setLocationRelativeTo(parent);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
-    }
+//    public settingForChatRoomWindow(JFrame parent){
+//        super(parent);
+//        setTitle("Setting for this conversation");
+//        setContentPane(settingForChatRoomPanel);
+//        setMinimumSize(new Dimension(450, 474));
+//        setModal(true);
+//        setLocationRelativeTo(parent);
+//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        setVisible(true);
+//    }
     public static void main(String[] args){
-        settingForChatRoomWindow settingForChatRoomWindow = new settingForChatRoomWindow(null);
+        //settingForChatRoomWindow settingForChatRoomWindow = new settingForChatRoomWindow(null);
+        JFrame frame = new JFrame("Change name");
+        frame.setContentPane(new settingForChatRoomWindow().settingForChatRoomPanel);
+        frame.setSize(450, 474);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }

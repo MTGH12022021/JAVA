@@ -1,5 +1,6 @@
 package loginHistoryWindow;
 
+import friendListWindow.friendListWindow;
 import loginWindow.loginWindow;
 
 import javax.swing.*;
@@ -10,16 +11,16 @@ public class loginHistoryWindow extends JDialog{
     private JPanel historyTablePanel;
     private JButton menuButton;
     private JTable loginHistory;
-    public loginHistoryWindow(JFrame parent){
-        super(parent);
-        createTable();
-        setTitle("Login history of the app");
-        setContentPane(historyTablePanel);
-        setMinimumSize(new Dimension(450, 474));
-        setModal(true);
-        setLocationRelativeTo(parent);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
+    public loginHistoryWindow(){
+//        super(parent);
+          createTable();
+//        setTitle("Login history of the app");
+//        setContentPane(historyTablePanel);
+//        setMinimumSize(new Dimension(450, 474));
+//        setModal(true);
+//        setLocationRelativeTo(parent);
+//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        setVisible(true);
     }
 
     public JPanel getRootPanel(){
@@ -30,6 +31,11 @@ public class loginHistoryWindow extends JDialog{
         loginHistory.setModel(new DefaultTableModel(null, new String[]{"Time", "Username", "Nickname"}));
     }
     public static void main(String[] args){
-        loginHistoryWindow loginHistoryWindow = new loginHistoryWindow(null);
+        //loginHistoryWindow loginHistoryWindow = new loginHistoryWindow(null);
+        JFrame frame = new JFrame("Change name");
+        frame.setContentPane(new loginHistoryWindow().historyTablePanel);
+        frame.setSize(450, 474);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
