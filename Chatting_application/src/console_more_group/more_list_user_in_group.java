@@ -1,21 +1,23 @@
+package console_more_group;
+
 import javax.swing.*;
 
-public class more_user extends JDialog {
+public class more_list_user_in_group extends JDialog {
     private JPanel contentPane;
-    private JButton groupButton;
-    private JButton button1;
+    private JButton DELETEButton;
+    private JButton button3;
+    private JButton memberListButton;
     private JButton buttonOK;
 
-    public more_user() {
+    public more_list_user_in_group() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
     }
 
     public static void main(String[] args) {
-        more_user dialog = new more_user();
+        more_list_user_in_group dialog = new more_list_user_in_group();
         dialog.pack();
-        dialog.setSize(300,400);
         dialog.setVisible(true);
         System.exit(0);
     }

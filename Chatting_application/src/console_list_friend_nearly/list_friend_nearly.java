@@ -1,3 +1,5 @@
+package console_list_friend_nearly;
+
 import javax.swing.*;
 
 public class list_friend_nearly extends JDialog {

@@ -1,21 +1,24 @@
+package console_list_group;
+
 import javax.swing.*;
 
-public class list_user extends JDialog {
+public class list_group extends JDialog {
     private JPanel contentPane;
+    private JButton buttonOK;
     private JButton list_userButton;
     private JButton listt_groupButton;
     private JButton historyLoginButton;
-    private JTable table1;
-    private JButton buttonOK;
+    private JButton group1Button;
+    private JButton moreButton;
 
-    public list_user() {
+    public list_group() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
     }
 
     public static void main(String[] args) {
-        list_user dialog = new list_user();
+        list_group dialog = new list_group();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

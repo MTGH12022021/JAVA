@@ -1,18 +1,23 @@
+package console_create_group;
+
 import javax.swing.*;
 
-public class list_member_in_group extends JDialog {
+public class create_group extends JDialog {
     private JPanel contentPane;
+    private JTextField textField1;
+    private JButton button1;
     private JTable table1;
+    private JButton createButton;
     private JButton buttonOK;
 
-    public list_member_in_group() {
+    public create_group() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
     }
 
     public static void main(String[] args) {
-        list_member_in_group dialog = new list_member_in_group();
+        create_group dialog = new create_group();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
