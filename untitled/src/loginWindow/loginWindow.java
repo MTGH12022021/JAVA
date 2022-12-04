@@ -1,7 +1,7 @@
 package loginWindow;
 
 import addANewPersonWindow.addANewPersonWindow;
-
+import registerWindow.registerWindow;
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,7 +23,8 @@ public class loginWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //loginWindow loginWindow = new loginWindow(null);
-        JFrame frame = new JFrame("Change name");
+        //new registerWindow();
+        JFrame frame = new JFrame("Login");
         frame.setContentPane(new loginWindow().loginPanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

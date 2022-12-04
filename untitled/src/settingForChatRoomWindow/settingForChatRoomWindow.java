@@ -24,7 +24,7 @@ public class settingForChatRoomWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //settingForChatRoomWindow settingForChatRoomWindow = new settingForChatRoomWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Setting for chat room");
         frame.setContentPane(new settingForChatRoomWindow().settingForChatRoomPanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -22,7 +22,7 @@ public class friendListWindow extends JDialog{
 //        setVisible(true);
 //    }
     public static void main(String[] args){
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Friend list");
         frame.setContentPane(new friendListWindow().fiendListPanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

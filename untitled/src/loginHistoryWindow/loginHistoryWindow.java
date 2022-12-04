@@ -32,7 +32,7 @@ public class loginHistoryWindow extends JDialog{
     }
     public static void main(String[] args){
         //loginHistoryWindow loginHistoryWindow = new loginHistoryWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Login history of the app");
         frame.setContentPane(new loginHistoryWindow().historyTablePanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

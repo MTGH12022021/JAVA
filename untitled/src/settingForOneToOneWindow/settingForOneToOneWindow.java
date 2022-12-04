@@ -23,7 +23,7 @@ public class settingForOneToOneWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //settingForOneToOneWindow settingForOneToOneWindow = new settingForOneToOneWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Setting for chat");
         frame.setContentPane(new settingForOneToOneWindow().settingOtoO);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -24,7 +24,7 @@ public class memberListOfRoomWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //memberListOfRoomWindow memberListOfRoomWindow = new memberListOfRoomWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Member list");
         frame.setContentPane(new memberListOfRoomWindow().memberListOfRoom);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

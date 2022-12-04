@@ -32,7 +32,7 @@ public class loginHistoryOfNicknameWindow extends JDialog{
     }
     public static void main(String[] args){
         //loginHistoryOfNicknameWindow loginHistoryOfNicknameWindow = new loginHistoryOfNicknameWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Login history of individual");
         frame.setContentPane(new loginHistoryOfNicknameWindow().loginHistoryOfNicknamePanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

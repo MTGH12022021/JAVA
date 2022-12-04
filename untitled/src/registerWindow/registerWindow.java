@@ -29,7 +29,7 @@ public class registerWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //registerWindow registerWindow = new registerWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Register");
         frame.setContentPane(new registerWindow().registerPanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

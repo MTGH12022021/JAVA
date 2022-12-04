@@ -25,7 +25,7 @@ public class settingForAppWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //settingForAppWindow settingForAppWindow = new settingForAppWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Setting for account");
         frame.setContentPane(new settingForAppWindow().settingForAppPanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

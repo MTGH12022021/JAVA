@@ -21,7 +21,7 @@ public class uploadImageWindow extends JDialog{
 //    }
     public static void main(String[] args){
         //uploadImageWindow uploadImageWindow = new uploadImageWindow(null);
-        JFrame frame = new JFrame("Change name");
+        JFrame frame = new JFrame("Upload image");
         frame.setContentPane(new uploadImageWindow().uploadImagePanel);
         frame.setSize(450, 474);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
