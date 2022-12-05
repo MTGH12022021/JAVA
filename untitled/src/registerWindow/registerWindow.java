@@ -4,9 +4,12 @@ import addANewPersonWindow.addANewPersonWindow;
 import loginWindow.loginWindow;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.util.Locale;
 
-public class registerWindow extends JDialog{
+public class registerWindow extends JFrame {
     private JTextField nickname;
     private JTextField Username;
     private JTextField password;
@@ -17,7 +20,8 @@ public class registerWindow extends JDialog{
     private JButton signUpButton;
     private JButton loginButton;
     private JPanel registerPanel;
-//    public registerWindow(JFrame parent){
+
+    //    public registerWindow(JFrame parent){
 //        super(parent);
 //        setTitle("Register");
 //        setContentPane(registerPanel);
@@ -27,12 +31,17 @@ public class registerWindow extends JDialog{
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
-    public static void main(String[] args){
-        //registerWindow registerWindow = new registerWindow(null);
-        JFrame frame = new JFrame("Register");
-        frame.setContentPane(new registerWindow().registerPanel);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+    public registerWindow(){
+        this.setContentPane(this.registerPanel);
+        this.setTitle("Register");
+        this.setSize(450, 474);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
+    public static void main(String[] args) {
+        //registerWindow registerWindow = new registerWindow(null);
+        registerWindow windowL = new registerWindow();
+
+    }
+
 }
