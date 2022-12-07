@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class loginHistoryOfNicknameWindow extends JDialog{
+public class loginHistoryOfNicknameWindow extends JFrame{
     private JButton menuButton;
     private JTable loginHistoryOfNickname;
     private JPanel loginHistoryOfNicknamePanel;
@@ -21,6 +21,11 @@ public class loginHistoryOfNicknameWindow extends JDialog{
 //        setLocationRelativeTo(parent);
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
+        this.setContentPane(this.loginHistoryOfNicknamePanel);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Login history of individual");
+        this.setVisible(true);
     }
 
     public JPanel getRootPanel(){
@@ -31,11 +36,8 @@ public class loginHistoryOfNicknameWindow extends JDialog{
         loginHistoryOfNickname.setModel(new DefaultTableModel(null, new String[]{"Time"}));
     }
     public static void main(String[] args){
-        //loginHistoryOfNicknameWindow loginHistoryOfNicknameWindow = new loginHistoryOfNicknameWindow(null);
-        JFrame frame = new JFrame("Login history of individual");
-        frame.setContentPane(new loginHistoryOfNicknameWindow().loginHistoryOfNicknamePanel);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        loginHistoryOfNicknameWindow loginHistoryOfNicknameWindow = new loginHistoryOfNicknameWindow();
+        //JFrame frame = new JFrame("Login history of individual");
+
     }
 }

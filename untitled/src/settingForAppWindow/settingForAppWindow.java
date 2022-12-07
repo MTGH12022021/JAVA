@@ -6,7 +6,7 @@ import settingForChatRoomWindow.settingForChatRoomWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class settingForAppWindow extends JDialog {
+public class settingForAppWindow extends JFrame {
     private JButton friendListButton;
     private JButton friendInvitationsButton;
     private JButton changeNameButton;
@@ -24,13 +24,17 @@ public class settingForAppWindow extends JDialog {
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    settingForAppWindow(){
+        this.setContentPane(this.settingForAppPanel);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Setting for the app");
+        this.setVisible(true);
+    }
     public static void main(String[] args) {
-        //settingForAppWindow settingForAppWindow = new settingForAppWindow(null);
-        JFrame frame = new JFrame("Setting for account");
-        frame.setContentPane(new settingForAppWindow().settingForAppPanel);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        settingForAppWindow settingForAppWindow = new settingForAppWindow();
+        //JFrame frame = new JFrame("Setting for account");
+
     }
 
 }

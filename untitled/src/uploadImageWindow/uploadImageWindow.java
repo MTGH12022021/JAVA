@@ -6,7 +6,7 @@ import settingForOneToOneWindow.settingForOneToOneWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class uploadImageWindow extends JDialog {
+public class uploadImageWindow extends JFrame {
     private JButton selectAPictureButton;
     private JPanel uploadImagePanel;
 
@@ -20,13 +20,17 @@ public class uploadImageWindow extends JDialog {
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    uploadImageWindow(){
+        this.setContentPane(this.uploadImagePanel);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Upload image");
+        this.setVisible(true);
+    }
     public static void main(String[] args) {
-        //uploadImageWindow uploadImageWindow = new uploadImageWindow(null);
-        JFrame frame = new JFrame("Upload image");
-        frame.setContentPane(new uploadImageWindow().uploadImagePanel);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        uploadImageWindow uploadImageWindow = new uploadImageWindow();
+        //JFrame frame = new JFrame("Upload image");
+
     }
 
 }

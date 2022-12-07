@@ -6,7 +6,7 @@ import settingForAppWindow.settingForAppWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class friendListWindow extends JDialog {
+public class friendListWindow extends JFrame {
     private JButton menuButton;
     private JButton friendListButton;
     private JButton deleteThisFriendButton;
@@ -22,12 +22,17 @@ public class friendListWindow extends JDialog {
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    friendListWindow(){
+        this.setContentPane(this.fiendListPanel);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Friend list");
+        this.setVisible(true);
+    }
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Friend list");
-        frame.setContentPane(new friendListWindow().fiendListPanel);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        //JFrame frame = new JFrame("Friend list");
+        friendListWindow friendListWindow = new friendListWindow();
+
     }
 
 }

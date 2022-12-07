@@ -6,7 +6,7 @@ import registerWindow.registerWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class memberListOfRoomWindow extends JDialog{
+public class memberListOfRoomWindow extends JFrame{
     private JButton menuButton;
     private JCheckBox adminCheckBox;
     private JButton deleteFromRoomButton;
@@ -22,13 +22,17 @@ public class memberListOfRoomWindow extends JDialog{
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    memberListOfRoomWindow(){
+        this.setContentPane(this.memberListOfRoom);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Member list of the room");
+        this.setVisible(true);
+    }
     public static void main(String[] args){
         //memberListOfRoomWindow memberListOfRoomWindow = new memberListOfRoomWindow(null);
-        JFrame frame = new JFrame("Member list");
-        frame.setContentPane(new memberListOfRoomWindow().memberListOfRoom);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        memberListOfRoomWindow memberListOfRoomWindow = new memberListOfRoomWindow();
+
     }
 
 }

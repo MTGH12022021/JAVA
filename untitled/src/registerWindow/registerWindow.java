@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class registerWindow extends JFrame {
@@ -36,7 +38,14 @@ public class registerWindow extends JFrame {
         this.setTitle("Register");
         this.setSize(450, 474);
         this.setVisible(true);
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                loginWindow loginWindow = new loginWindow();
+            }
+        });
     }
     public static void main(String[] args) {
         //registerWindow registerWindow = new registerWindow(null);

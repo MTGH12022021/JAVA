@@ -6,7 +6,7 @@ import settingForOneToOneWindow.settingForOneToOneWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class settingForChatRoomWindow extends JDialog{
+public class settingForChatRoomWindow extends JFrame{
     private JButton memberOfTheRoomButton;
     private JButton changeNameButton;
     private JButton changeAvatarButton;
@@ -22,12 +22,16 @@ public class settingForChatRoomWindow extends JDialog{
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    settingForChatRoomWindow(){
+        this.setContentPane(this.settingForChatRoomPanel);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Setting for chat room");
+        this.setVisible(true);
+    }
     public static void main(String[] args){
-        //settingForChatRoomWindow settingForChatRoomWindow = new settingForChatRoomWindow(null);
-        JFrame frame = new JFrame("Setting for chat room");
-        frame.setContentPane(new settingForChatRoomWindow().settingForChatRoomPanel);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        settingForChatRoomWindow settingForChatRoomWindow = new settingForChatRoomWindow();
+        //JFrame frame = new JFrame("Setting for chat room");
+
     }
 }

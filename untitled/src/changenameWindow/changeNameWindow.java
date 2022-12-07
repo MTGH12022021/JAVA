@@ -3,7 +3,7 @@ package changenameWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class changeNameWindow extends JDialog {
+public class changeNameWindow extends JFrame {
     private JTextField newName;
     private JPanel changeNamePanel;
 
@@ -17,13 +17,17 @@ public class changeNameWindow extends JDialog {
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    changeNameWindow(){
+        this.setContentPane(this.changeNamePanel);
+        this.setSize(450, 100);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Change name");
+        this.setVisible(true);
+    }
     public static void main(String[] args) {
-        //changeNameWindow changeNameWindow = new changeNameWindow(null);
-        JFrame frame = new JFrame("Change name");
-        frame.setContentPane(new changeNameWindow().changeNamePanel);
-        frame.setSize(450, 100);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        changeNameWindow changeNameWindow = new changeNameWindow();
+        //JFrame frame = new JFrame("Change name");
+
     }
 
 }

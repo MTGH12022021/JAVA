@@ -5,7 +5,7 @@ import addANewPersonWindow.addANewPersonWindow;
 import javax.swing.*;
 import java.awt.*;
 
-public class settingForOneToOneWindow extends JDialog{
+public class settingForOneToOneWindow extends JFrame{
     private JPanel settingOtoO;
     private JButton createAChatRoomButton;
     private JButton deleteThisConversationButton;
@@ -21,12 +21,16 @@ public class settingForOneToOneWindow extends JDialog{
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
+    settingForOneToOneWindow(){
+        this.setContentPane(this.settingOtoO);
+        this.setSize(450, 474);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Setting for chat");
+        this.setVisible(true);
+    }
     public static void main(String[] args){
-        //settingForOneToOneWindow settingForOneToOneWindow = new settingForOneToOneWindow(null);
-        JFrame frame = new JFrame("Setting for chat");
-        frame.setContentPane(new settingForOneToOneWindow().settingOtoO);
-        frame.setSize(450, 474);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        settingForOneToOneWindow settingForOneToOneWindow = new settingForOneToOneWindow();
+        //JFrame frame = new JFrame("Setting for chat");
+
     }
 }

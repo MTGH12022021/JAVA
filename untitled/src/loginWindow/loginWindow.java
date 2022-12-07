@@ -34,8 +34,10 @@ public class loginWindow extends JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         signup.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 registerWindow r = new registerWindow();
             }
         });
