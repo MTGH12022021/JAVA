@@ -20,16 +20,14 @@ public class new_console extends JDialog {
     public new_console() {
         setContentPane(contentPane);
         setModal(true);
-
-
+        this.pack();
+        this.setSize(800,700);
+        this.setVisible(true);
+        System.exit(0);
     }
 
     public static void main(String[] args) {
         new_console dialog = new new_console();
-        dialog.pack();
-        dialog.setSize(800,700);
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     private void createUIComponents() {

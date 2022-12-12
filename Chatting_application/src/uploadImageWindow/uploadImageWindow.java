@@ -20,7 +20,7 @@ public class uploadImageWindow extends JFrame {
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
-    uploadImageWindow(){
+    public uploadImageWindow(){
         this.setContentPane(this.uploadImagePanel);
         this.setSize(450, 474);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -22,7 +22,7 @@ public class friendListWindow extends JFrame {
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
-    friendListWindow(){
+    public friendListWindow(){
         this.setContentPane(this.fiendListPanel);
         this.setSize(450, 474);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

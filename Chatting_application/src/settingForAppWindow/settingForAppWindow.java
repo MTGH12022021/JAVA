@@ -2,9 +2,13 @@ package settingForAppWindow;
 
 import addANewPersonWindow.addANewPersonWindow;
 import settingForChatRoomWindow.settingForChatRoomWindow;
+import friendListWindow.friendListWindow;
+import uploadImageWindow.uploadImageWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class settingForAppWindow extends JFrame {
     private JButton friendListButton;
@@ -30,6 +34,19 @@ public class settingForAppWindow extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Setting for the app");
         this.setVisible(true);
+        friendListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new friendListWindow();
+            }
+        });
+        changeAvatarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new uploadImageWindow();
+            }
+        });
     }
     public static void main(String[] args) {
         settingForAppWindow settingForAppWindow = new settingForAppWindow();

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import loginWindow.loginWindow;
 public class Home_admin_user extends JFrame  implements ActionListener {
     static JPanel panel;
     static JButton admin, user, exit;
@@ -40,8 +40,8 @@ public class Home_admin_user extends JFrame  implements ActionListener {
             new login_admin();
         }
         if(e.getSource() == user) {
-//            this.dispose();
-
+           this.dispose();
+           new loginWindow();
         }
         if(e.getSource() == exit) {
             this.dispose();

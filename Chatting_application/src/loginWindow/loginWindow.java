@@ -1,6 +1,7 @@
 package loginWindow;
 
 import addANewPersonWindow.addANewPersonWindow;
+import newPacket.new_console;
 import registerWindow.registerWindow;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -44,7 +45,7 @@ public class loginWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new Home_admin_user();
+                new new_console();
             }
         });
     }
