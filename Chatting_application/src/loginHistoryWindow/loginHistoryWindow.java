@@ -1,11 +1,15 @@
 package loginHistoryWindow;
 
+import HomeAdmin.home_admin;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class loginHistoryWindow extends JFrame {
     private JPanel historyTablePanel;
-    private JButton menuButton;
+    private JButton backButton;
     private JTable loginHistory;
 
     public loginHistoryWindow() {
@@ -16,6 +20,13 @@ public class loginHistoryWindow extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Login history of the app");
         this.setVisible(true);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new home_admin();
+            }
+        });
 //        setTitle("Login history of the app");
 //        setContentPane(historyTablePanel);
 //        setMinimumSize(new Dimension(450, 474));

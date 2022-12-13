@@ -27,7 +27,6 @@ public class settingForOneToOneWindow extends JFrame implements ActionListener {
 
         if(e.getSource() == backButton){
             dispose();
-
         }
         if(e.getSource() == createAChatRoomButton){
            addFriendWithGroup addFr = new addFriendWithGroup();

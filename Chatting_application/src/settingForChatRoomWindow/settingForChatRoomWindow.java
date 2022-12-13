@@ -1,8 +1,15 @@
 package settingForChatRoomWindow;
 
-import javax.swing.*;
+import changenameWindow.changeNameWindow;
+import memberListOfRoomWindow.memberListOfRoomWindow;
+import uploadImageWindow.uploadImageWindow;
 
-public class settingForChatRoomWindow extends JFrame{
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class settingForChatRoomWindow extends JFrame implements ActionListener{
     private JButton memberOfTheRoomButton;
     private JButton changeNameButton;
     private JButton changeAvatarButton;
@@ -18,12 +25,27 @@ public class settingForChatRoomWindow extends JFrame{
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
-    settingForChatRoomWindow(){
+    public settingForChatRoomWindow(){
         this.setContentPane(this.settingForChatRoomPanel);
         this.setSize(450, 474);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setTitle("Setting for chat room");
         this.setVisible(true);
+        memberOfTheRoomButton.addActionListener(this);
+        changeAvatarButton.addActionListener(this);
+        changeAvatarButton.addActionListener(this);
+    }
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == memberOfTheRoomButton){
+            dispose();
+            memberListOfRoomWindow nw = new memberListOfRoomWindow();
+        }
+        if(e.getSource() == changeAvatarButton){
+            changeNameWindow nw = new changeNameWindow();
+        }
+        if(e.getSource() == changeAvatarButton){
+            uploadImageWindow nw1 = new uploadImageWindow();
+        }
     }
     public static void main(String[] args){
         settingForChatRoomWindow settingForChatRoomWindow = new settingForChatRoomWindow();

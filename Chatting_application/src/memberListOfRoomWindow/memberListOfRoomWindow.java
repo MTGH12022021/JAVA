@@ -1,9 +1,13 @@
 package memberListOfRoomWindow;
 
+import settingForChatRoomWindow.settingForChatRoomWindow;
+import addANewPersonWindow.addANewPersonWindow;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class memberListOfRoomWindow extends JFrame{
-    private JButton menuButton;
+    private JButton backButton;
     private JCheckBox adminCheckBox;
     private JButton deleteFromRoomButton;
     private JButton addANewMemberButton;
@@ -18,12 +22,26 @@ public class memberListOfRoomWindow extends JFrame{
 //        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 //        setVisible(true);
 //    }
-    memberListOfRoomWindow(){
+public memberListOfRoomWindow(){
         this.setContentPane(this.memberListOfRoom);
         this.setSize(450, 474);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Member list of the room");
         this.setVisible(true);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new settingForChatRoomWindow();
+            }
+        });
+        addANewMemberButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new addANewPersonWindow();
+            }
+        });
     }
     public static void main(String[] args){
         //memberListOfRoomWindow memberListOfRoomWindow = new memberListOfRoomWindow(null);

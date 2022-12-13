@@ -3,6 +3,7 @@ package HomeAdmin;
 import homeAdminUser.Home_admin_user;
 import listGroup.list_group;
 import listUser.list_user;
+import loginHistoryWindow.loginHistoryWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,6 +74,7 @@ public class home_admin extends JFrame implements ActionListener {
         if(e.getSource() == history_login_app){
             this.dispose();
 //            new listUser.list_user();
+            new loginHistoryWindow();
         }
 
         if(e.getSource() == logout){
