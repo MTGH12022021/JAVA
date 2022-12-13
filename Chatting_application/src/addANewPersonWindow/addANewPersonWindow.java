@@ -1,18 +1,12 @@
 package addANewPersonWindow;
 
-import changenameWindow.changeNameWindow;
-import memberListOfRoomWindow.memberListOfRoomWindow;
-
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
-import java.util.Locale;
 
 public class addANewPersonWindow extends JFrame {
     private JTextField textField1;
     private JButton findButton;
     private JPanel addANewPersonPanel;
+    private JButton backButton;
 
     //    public addANewPersonWindow(JFrame parent){
 //        super(parent);

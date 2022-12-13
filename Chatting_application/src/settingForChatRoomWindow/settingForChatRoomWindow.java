@@ -1,10 +1,6 @@
 package settingForChatRoomWindow;
 
-import addANewPersonWindow.addANewPersonWindow;
-import settingForOneToOneWindow.settingForOneToOneWindow;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class settingForChatRoomWindow extends JFrame{
     private JButton memberOfTheRoomButton;

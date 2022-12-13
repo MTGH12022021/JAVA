@@ -1,10 +1,6 @@
 package memberListOfRoomWindow;
 
-import addANewPersonWindow.addANewPersonWindow;
-import registerWindow.registerWindow;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class memberListOfRoomWindow extends JFrame{
     private JButton menuButton;

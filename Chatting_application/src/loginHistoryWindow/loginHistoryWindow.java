@@ -1,14 +1,7 @@
 package loginHistoryWindow;
 
-import friendListWindow.friendListWindow;
-import loginWindow.loginWindow;
-
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.StyleContext;
-import java.awt.*;
-import java.util.Locale;
 
 public class loginHistoryWindow extends JFrame {
     private JPanel historyTablePanel;

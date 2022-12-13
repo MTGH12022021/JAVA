@@ -1,11 +1,7 @@
 package loginHistoryOfNicknameWindow;
 
-import friendListWindow.friendListWindow;
-import loginHistoryWindow.loginHistoryWindow;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
 public class loginHistoryOfNicknameWindow extends JFrame{
     private JButton menuButton;

@@ -1,53 +1,48 @@
 package loginWindow;
 
-import addANewPersonWindow.addANewPersonWindow;
-import newPacket.new_console;
+
+import Chatting.chatting;
+import homeAdminUser.Home_admin_user;
 import registerWindow.registerWindow;
+
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
-import newPacket.Home_admin_user;
-public class loginWindow extends JFrame {
+
+public class loginWindow extends JFrame implements ActionListener {
     private JTextField username;
     private JTextField password;
     private JButton Login;
     private JButton signup;
     private JPanel loginPanel;
+    private JButton backButton;
 
-    //    public loginWindow(JFrame parent){
-//        super(parent);
-//        setTitle("Login");
-//        setContentPane(loginPanel);
-//        setMinimumSize(new Dimension(450, 474));
-//        setModal(true);
-//        setLocationRelativeTo(parent);
-//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        setVisible(true);
-//    }
+
     public loginWindow() {
         this.setContentPane(this.loginPanel);
         this.setTitle("Login");
         this.setSize(450, 474);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        signup.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                registerWindow r = new registerWindow();
-            }
-        });
-        Login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new new_console();
-            }
-        });
+
+        Login.addActionListener(this);
+        signup.addActionListener(this);
+        backButton.addActionListener(this);
+
+    }
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == backButton){
+            dispose();
+            Home_admin_user h = new Home_admin_user();
+        }
+        if(e.getSource() == signup){
+            dispose();
+            registerWindow r = new registerWindow();
+        }
+        if(e.getSource() == Login){
+            dispose();
+            chatting chat = new chatting();
+        }
     }
 
     public static void main(String[] args) {

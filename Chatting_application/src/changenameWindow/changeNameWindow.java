@@ -1,28 +1,36 @@
 package changenameWindow;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class changeNameWindow extends JFrame {
-    private JTextField newName;
+public class changeNameWindow extends JFrame implements ActionListener {
     private JPanel changeNamePanel;
+    private JButton backButton;
+    private JButton saveButton;
+    private JTextField textField1;
 
-    //    public changeNameWindow(JFrame parent){
-//        super(parent);
-//        setTitle("Change name");
-//        setContentPane(changeNamePanel);
-//        setMinimumSize(new Dimension(450, 100));
-//        setModal(true);
-//        setLocationRelativeTo(parent);
-//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        setVisible(true);
-//    }
-    changeNameWindow(){
+
+    public changeNameWindow(){
         this.setContentPane(this.changeNamePanel);
         this.setSize(450, 100);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Change name");
         this.setVisible(true);
+
+        saveButton.addActionListener(this);
+        backButton.addActionListener(this);
+    }
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == backButton){
+            dispose();
+        }
+        if (e.getSource()==saveButton){
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to change name?", "Delete", JOptionPane.YES_NO_OPTION);
+            if(option == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(null,"Change successfully");
+            }
+        }
     }
     public static void main(String[] args) {
         changeNameWindow changeNameWindow = new changeNameWindow();

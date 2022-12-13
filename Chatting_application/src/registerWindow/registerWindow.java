@@ -1,15 +1,11 @@
 package registerWindow;
 
-import addANewPersonWindow.addANewPersonWindow;
+import listFriendNearly.list_friend_nearly;
 import loginWindow.loginWindow;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class registerWindow extends JFrame {
     private JTextField nickname;
@@ -44,6 +40,13 @@ public class registerWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 loginWindow loginWindow = new loginWindow();
+            }
+        });
+        signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                list_friend_nearly loginWindow = new list_friend_nearly();
             }
         });
     }

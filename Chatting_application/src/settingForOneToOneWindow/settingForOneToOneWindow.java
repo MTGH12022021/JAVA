@@ -1,32 +1,44 @@
 package settingForOneToOneWindow;
 
-import addANewPersonWindow.addANewPersonWindow;
-
+import addFriendWithGroup.addFriendWithGroup;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class settingForOneToOneWindow extends JFrame{
+public class settingForOneToOneWindow extends JFrame implements ActionListener {
     private JPanel settingOtoO;
     private JButton createAChatRoomButton;
     private JButton deleteThisConversationButton;
+    private JButton backButton;
     private JLabel userAvatar;
 
-//    public settingForOneToOneWindow(JFrame parent){
-//        super(parent);
-//        setTitle("Setting for this conversation");
-//        setContentPane(settingOtoO);
-//        setMinimumSize(new Dimension(450, 474));
-//        setModal(true);
-//        setLocationRelativeTo(parent);
-//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        setVisible(true);
-//    }
-    settingForOneToOneWindow(){
-        this.setContentPane(this.settingOtoO);
-        this.setSize(450, 474);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle("Setting for chat");
-        this.setVisible(true);
+    public settingForOneToOneWindow(){
+        setContentPane(settingOtoO);
+        setSize(450, 474);
+        setTitle("Setting for chat");
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setVisible(true);
+
+        backButton.addActionListener(this);
+        createAChatRoomButton.addActionListener(this);
+        deleteThisConversationButton.addActionListener(this);
+    }
+    public void actionPerformed(ActionEvent e){
+
+        if(e.getSource() == backButton){
+            dispose();
+
+        }
+        if(e.getSource() == createAChatRoomButton){
+           addFriendWithGroup addFr = new addFriendWithGroup();
+
+        }
+        if(e.getSource() == deleteThisConversationButton){
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete message?", "Delete", JOptionPane.YES_NO_OPTION);
+            if(option == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(null,"Delete successfully");
+            }
+        }
     }
     public static void main(String[] args){
         settingForOneToOneWindow settingForOneToOneWindow = new settingForOneToOneWindow();
