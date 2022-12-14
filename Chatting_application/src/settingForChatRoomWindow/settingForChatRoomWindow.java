@@ -32,7 +32,7 @@ public class settingForChatRoomWindow extends JFrame implements ActionListener{
         this.setTitle("Setting for chat room");
         this.setVisible(true);
         memberOfTheRoomButton.addActionListener(this);
-        changeAvatarButton.addActionListener(this);
+        changeNameButton.addActionListener(this);
         changeAvatarButton.addActionListener(this);
     }
     public void actionPerformed(ActionEvent e){
@@ -40,7 +40,7 @@ public class settingForChatRoomWindow extends JFrame implements ActionListener{
             dispose();
             memberListOfRoomWindow nw = new memberListOfRoomWindow();
         }
-        if(e.getSource() == changeAvatarButton){
+        if(e.getSource() == changeNameButton){
             changeNameWindow nw = new changeNameWindow();
         }
         if(e.getSource() == changeAvatarButton){
