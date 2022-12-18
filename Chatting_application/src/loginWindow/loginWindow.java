@@ -4,6 +4,7 @@ package loginWindow;
 import Chatting.chatting;
 import homeAdminUser.Home_admin_user;
 import registerWindow.registerWindow;
+import forgetPasswordWindow.forgetPasswordWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ public class loginWindow extends JFrame implements ActionListener {
     private JButton signup;
     private JPanel loginPanel;
     private JButton backButton;
+    private JButton forgetPasswordButton;
 
 
     public loginWindow() {
@@ -28,7 +30,7 @@ public class loginWindow extends JFrame implements ActionListener {
         Login.addActionListener(this);
         signup.addActionListener(this);
         backButton.addActionListener(this);
-
+        forgetPasswordButton.addActionListener(this);
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == backButton){
@@ -42,6 +44,10 @@ public class loginWindow extends JFrame implements ActionListener {
         if(e.getSource() == Login){
             dispose();
             chatting chat = new chatting();
+        }
+        if(e.getSource() == forgetPasswordButton){
+            dispose();
+            forgetPasswordWindow forgetPasswordWindow = new forgetPasswordWindow();
         }
     }
 
