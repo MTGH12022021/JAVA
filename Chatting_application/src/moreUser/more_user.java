@@ -1,6 +1,7 @@
 package moreUser;
 
 import loginHistoryOfNicknameWindow.loginHistoryOfNicknameWindow;
+import moreGroup.more_group;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +28,7 @@ public class more_user extends JFrame  implements ActionListener {
         back = new JButton("Back");
         back.addActionListener(this);
         panel.add(group);
-        panel.add(friends);
+
         panel.add(history_login);
         panel.add(delete);
         panel.add(back);
@@ -43,7 +44,7 @@ public class more_user extends JFrame  implements ActionListener {
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == group) {
-            this.dispose();
+            dispose();
         }
         if(e.getSource() == friends) {
 
@@ -53,13 +54,13 @@ public class more_user extends JFrame  implements ActionListener {
 
         }
         if(e.getSource() == back) {
-            this.dispose();
+            dispose();
         }
         if(e.getSource() == back) {
-            this.dispose();
+            dispose();
         }
         if(e.getSource() == back) {
-            this.dispose();
+            dispose();
         }
 
     }

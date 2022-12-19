@@ -1,6 +1,7 @@
 package listUser;
 
 import HomeAdmin.home_admin;
+import moreGroup.more_group;
 import moreUser.more_user;
 
 import java.awt.*;
@@ -120,7 +121,7 @@ class ButtonEditor extends DefaultCellEditor {
     public Object getCellEditorValue() {
         if (isPushed) {
 
-            more_user add = new more_user();
+            more_user gr = new more_user();
 
         }
         isPushed = false;
