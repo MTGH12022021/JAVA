@@ -1,13 +1,17 @@
 package registerWindow;
 
+import controllers.users.chatApplicationUserController;
 import listFriendNearly.list_friend_nearly;
 import loginWindow.loginWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.time.LocalDate;
 public class registerWindow extends JFrame {
+    private chatApplicationUserController UserController ;
     private JTextField nickname;
     private JTextField Username;
     private JTextField password;
@@ -30,11 +34,14 @@ public class registerWindow extends JFrame {
 //        setVisible(true);
 //    }
     public registerWindow(){
+        UserController = new chatApplicationUserController();
+
         this.setContentPane(this.registerPanel);
         this.setTitle("Register");
         this.setSize(450, 474);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //todo button login process
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,9 +49,14 @@ public class registerWindow extends JFrame {
                 loginWindow loginWindow = new loginWindow();
             }
         });
+        //todo button register process
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Calendar calendar = Calendar.getInstance();
+                String date = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE);
+                int check = UserController.Register(Username.getText(), Email.getText(), password.getText(), 0, date);
+                System.out.println(check);
                 dispose();
                 list_friend_nearly loginWindow = new list_friend_nearly();
             }
