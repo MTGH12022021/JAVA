@@ -2,6 +2,7 @@ package loginWindow;
 
 
 import Chatting.chatting;
+import controllers.users.chatApplicationUserController;
 import homeAdminUser.Home_admin_user;
 import registerWindow.registerWindow;
 import forgetPasswordWindow.forgetPasswordWindow;
@@ -18,8 +19,7 @@ public class loginWindow extends JFrame implements ActionListener {
     private JPanel loginPanel;
     private JButton backButton;
     private JButton forgetPasswordButton;
-
-
+    private chatApplicationUserController UserController = new chatApplicationUserController();
     public loginWindow() {
         this.setContentPane(this.loginPanel);
         this.setTitle("Login");
@@ -42,8 +42,13 @@ public class loginWindow extends JFrame implements ActionListener {
             registerWindow r = new registerWindow();
         }
         if(e.getSource() == Login){
-            dispose();
-            chatting chat = new chatting();
+            boolean check = UserController.Login(username.getText(),password.getText());
+            System.out.println(check);
+            if (check) 
+            {
+                dispose();
+                chatting chat = new chatting();
+            }
         }
         if(e.getSource() == forgetPasswordButton){
             dispose();
