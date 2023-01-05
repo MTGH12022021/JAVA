@@ -15,7 +15,7 @@ public class connectData {
         user = "";
         pass = "";
         String databasename = "ChatApplication";
-        String URL = "jdbc:sqlserver://DESKTOP-GAVBMCE;databaseName=" + databasename
+        String URL = "jdbc:sqlserver://localhost:1433;databaseName=" + databasename
                 + ";encrypt=true;trustServerCertificate=true;";
         user = System.getenv("USER");
         pass = System.getenv("PASSWORD");
