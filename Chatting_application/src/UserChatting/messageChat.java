@@ -1,9 +1,8 @@
 package UserChatting;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class chatLeft {
+public class messageChat {
     private JTextArea textArea = new JTextArea();
     private JTextField textChat;
     private JPanel chatleft;
@@ -11,7 +10,7 @@ public class chatLeft {
     private JLabel Time;
     private JTextArea displayMessage;
 
-    public chatLeft (){
+    public messageChat(){
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
 
@@ -35,7 +34,7 @@ public class chatLeft {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        JPanel panel = new chatLeft().chatleft;
+        JPanel panel = new messageChat().chatleft;
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);

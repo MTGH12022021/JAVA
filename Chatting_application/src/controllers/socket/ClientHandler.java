@@ -18,6 +18,7 @@ public class ClientHandler implements Runnable {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientname;
+    private String id;
 
 
     public ClientHandler(Socket socket) {
@@ -29,8 +30,7 @@ public class ClientHandler implements Runnable {
             this.clientname = bufferedReader.readLine();
             JTextField message = new JTextField();
             clientHandlers.add(this);
-            message.setText("Server: " + clientname + " has entered the chat!\n");
-            message_transfer(message);
+
         } catch (IOException e) {
             closeEverything(this.socket, bufferedReader, bufferedWriter);
         }
@@ -52,15 +52,35 @@ public class ClientHandler implements Runnable {
     }
 
     public void message_transfer(JTextField message) {
+        String mess = message.getText();
+        int indexTypeAndId = mess.indexOf("/");
+        int indexIdAndMess = mess.indexOf("/ ");
+        String type = mess.substring(0,indexTypeAndId);
+        String IdReceive = mess.substring(indexTypeAndId+1, indexIdAndMess);
+        mess  = mess.substring(indexIdAndMess+2, mess.length());
+        System.out.println(indexIdAndMess + "  " + indexTypeAndId);
         for (ClientHandler clientHandler : clientHandlers) {
             if (!clientHandler.clientname.equals(this.clientname)) {
-                try {
-                    clientHandler.bufferedWriter.write(message.getText());
-                    clientHandler.bufferedWriter.newLine();
-                    clientHandler.bufferedWriter.flush();
-                } catch (IOException e) {
-                    closeEverything(this.socket, bufferedReader, bufferedWriter);
+                if(type.equals("user")){
+                    if(clientHandler.clientname.equals(IdReceive)) {
+                        try {
+                            clientHandler.bufferedWriter.write(mess);
+                            clientHandler.bufferedWriter.newLine();
+                            clientHandler.bufferedWriter.flush();
+                        } catch (IOException e) {
+                            closeEverything(this.socket, bufferedReader, bufferedWriter);
+                        }
+                    }
+                }else if(type.equals("group")){
+                    try {
+                        clientHandler.bufferedWriter.write(mess);
+                        clientHandler.bufferedWriter.newLine();
+                        clientHandler.bufferedWriter.flush();
+                    } catch (IOException e) {
+                        closeEverything(this.socket, bufferedReader, bufferedWriter);
+                    }
                 }
+
             }
         }
     }
