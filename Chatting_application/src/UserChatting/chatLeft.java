@@ -9,13 +9,28 @@ public class chatLeft {
     private JPanel chatleft;
     private JLabel HoTen;
     private JLabel Time;
-    private JButton button1;
-    private JPanel tempPanel;
+    private JTextArea displayMessage;
 
     public chatLeft (){
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
-        tempPanel.
+
+    }
+
+    public void setHoTen(String hoTen) {
+        HoTen.setText(hoTen);
+    }
+
+    public JPanel getChatleft() {
+        return chatleft;
+    }
+
+    public JTextArea getDisplayMessage() {
+        return displayMessage;
+    }
+
+    public void setTime(String time) {
+        Time.setText(time);
     }
 
     public static void main(String[] args) {
@@ -28,7 +43,5 @@ public class chatLeft {
         frame.setSize(288,79);
         frame.setResizable(false);
         frame.setVisible(true);
-
-
     }
 }

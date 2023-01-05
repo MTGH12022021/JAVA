@@ -1,8 +1,9 @@
 package Chatting;
 
+import UserChatting.chatLeft;
 import settingForAppWindow.settingForAppWindow;
 import settingForOneToOneWindow.settingForOneToOneWindow;
-
+import java.net.UnknownHostException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 public class chatting extends JFrame implements ActionListener {
     private JPanel contentPane;
@@ -19,16 +24,17 @@ public class chatting extends JFrame implements ActionListener {
     private JButton peopleButton;
     private JButton moreButton;
     private JButton send;
-    private JButton nameButton;
     private JPanel Chatting;
     private JScrollPane scrollChat;
-    private JButton revokeButton;
     private JButton user;
     private JLabel staticOnl;
     private JButton iconButton;
     private JButton fileButton;
     private JTextField sendText;
+    private JPanel bodyPanel;
     private JButton buttonOK;
+    private GridBagConstraints gbc = new GridBagConstraints();
+    private int count = 0;
 
     public chatting() {
         setContentPane(contentPane);
@@ -43,6 +49,11 @@ public class chatting extends JFrame implements ActionListener {
 
         user.addActionListener(this);
         moreButton.addActionListener(this);
+        try {
+            StartClient();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == user){
@@ -83,7 +94,7 @@ public class chatting extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
 
-            messField.addKeyListener(new KeyListener(){
+            sendText.addKeyListener(new KeyListener(){
 
                 @Override
                 public void keyTyped(KeyEvent e) {
@@ -95,12 +106,27 @@ public class chatting extends JFrame implements ActionListener {
                 public void keyPressed(KeyEvent e) {
 
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        chatLeft textRight= new chatLeft();
+                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                        Date now = new Date();
+                        String date = formatter.format(now);
                         try{
                             bufferedWriter.write(username + ": "+ sendText.getText());
                             bufferedWriter.newLine();
                             bufferedWriter.flush();
+                            System.out.println("hello");
+                            textRight.getDisplayMessage().setText(sendText.getText());
+                            textRight.setTime(date);
+                            textRight.setHoTen(username);
+                            gbc.gridx = 0;
+                            gbc.gridy = count;
+                            gbc.weightx = 0.1;
+                            gbc.anchor = GridBagConstraints.EAST;
+                            bodyPanel.add(textRight.getChatleft(), gbc);
+                            bodyPanel.revalidate();
+                            bodyPanel.repaint();
+                            count++;
 
-                            display_message.append("\n"+messField.getText());
                         }catch(IOException E){
                             closeEverything(socket, bufferedReader, bufferedWriter);
                         }
@@ -125,7 +151,26 @@ public class chatting extends JFrame implements ActionListener {
                     while(socket.isConnected()){
                         try{
                             msgFromCharGroup = bufferedReader.readLine();
-                            display_message.append("\n"+msgFromCharGroup);
+                            if (msgFromCharGroup != null) {
+                                int specialCharacter = msgFromCharGroup.indexOf(":");
+                                chatLeft textRight= new chatLeft();
+                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                                Date now = new Date();
+                                String date = formatter.format(now);
+                                chatLeft Left = new chatLeft();
+                                Left.getDisplayMessage().setText(msgFromCharGroup.substring(specialCharacter+2, msgFromCharGroup.length()));
+                                Left.setTime(date);
+                                Left.setHoTen(msgFromCharGroup.substring(0,specialCharacter));
+                                gbc.gridx = 0;
+                                gbc.gridy = count;
+                                gbc.weightx = 0.1;
+                                gbc.anchor = GridBagConstraints.WEST;
+
+                                bodyPanel.add(Left.getChatleft(), gbc);
+                                bodyPanel.revalidate();
+                                bodyPanel.repaint();
+                                count++;
+                            }
                         }catch(IOException e){
                             closeEverything(socket, bufferedReader, bufferedWriter);
                         }
@@ -151,6 +196,117 @@ public class chatting extends JFrame implements ActionListener {
             }
         }
     }
+    public void StartClient() throws IOException{
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your name: ");
+        String username = scanner.nextLine();
+        Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
+        Client__ client__ = new Client__(socket, username);
+        client__.sendMessage();
+        client__.listenforMessage();
+    }
+    /*
+    public class Client__ {
+        private Socket socket;
+        private BufferedReader bufferedReader;
+        private BufferedWriter bufferedWriter;
+        private String username;
+
+        public Client__(Socket socket,String username){
+            try{
+                this.socket = socket;
+                this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+                this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
+                this.username = username;
+            }catch(IOException e){
+                closeEverything(this.socket, bufferedReader, bufferedWriter);
+            }
+        }
+
+        public void send (String message){
+
+        }
+
+        public void sendMessage(){
+            try {
+                bufferedWriter.write(username);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+            }
+
+            sendText.addKeyListener(new KeyListener(){
+
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        chatLeft textLeft = new chatLeft();
+                        try{
+                            bufferedWriter.write(username + ": "+ sendText.getText());
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+
+                            display_message.append("\n"+sendText.getText());
+                        }catch(IOException E){
+                            closeEverything(socket, bufferedReader, bufferedWriter);
+                        }
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+
+
+                }
+
+            });
+        }
+
+        public void listenforMessage(){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    String msgFromCharGroup;
+                    while(socket.isConnected()){
+                        try{
+                            msgFromCharGroup = bufferedReader.readLine();
+                            display_message.append("\n"+ msgFromCharGroup);
+                        }catch(IOException e){
+                            closeEverything(socket, bufferedReader, bufferedWriter);
+                        }
+                    }
+                }
+            }).start();
+        }
+        public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+
+            try {
+
+                if (socket != null) {
+                    socket.close();
+                }
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+                if (bufferedWriter != null){
+                    bufferedWriter.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    */
     public static void main(String[] args) {
         chatting dialog = new chatting();
     }
