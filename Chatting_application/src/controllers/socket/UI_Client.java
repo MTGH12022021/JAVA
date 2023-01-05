@@ -1,57 +1,84 @@
-package Chatting;
+package controllers.socket;
 
-import settingForAppWindow.settingForAppWindow;
-import settingForOneToOneWindow.settingForOneToOneWindow;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Scanner;
 
-public class chatting extends JFrame implements ActionListener {
-    private JPanel contentPane;
-    private JTextField textField1;
-    private JButton button1;
-    private JButton peopleButton;
-    private JButton moreButton;
-    private JButton send;
-    private JButton nameButton;
-    private JPanel Chatting;
-    private JScrollPane scrollChat;
-    private JButton revokeButton;
-    private JButton user;
-    private JLabel staticOnl;
-    private JButton iconButton;
-    private JButton fileButton;
-    private JTextField sendText;
-    private JButton buttonOK;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
-    public chatting() {
-        setContentPane(contentPane);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(700,600);
-        setVisible(true);
-        getRootPane().setDefaultButton(buttonOK);
-        contentPane.getMinimumSize();
+import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-        Chatting.setPreferredSize(new Dimension(640, 480));
-        scrollChat.setMinimumSize(new Dimension(100, 0));
 
-        user.addActionListener(this);
-        moreButton.addActionListener(this);
-    }
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == user){
-            settingForAppWindow set_user = new settingForAppWindow();
+
+public class UI_Client extends JFrame {
+    private JPanel display_panel = new JPanel();
+    private JPanel main_panel = new JPanel();
+    private JTextArea display_message = new JTextArea();
+    private JTextField messField = new JTextField();
+    private JPanel message_panel = new JPanel();
+    private JScrollPane mScrollPane = new JScrollPane(display_message);
+    private JButton send_message = new JButton("Send");
+
+    public UI_Client() {
+        this.setSize(720, 360);
+
+        main_panel.setLayout(new BoxLayout(main_panel, BoxLayout.Y_AXIS));
+        display_message.setLineWrap(true);
+        display_message.setWrapStyleWord(true);
+        display_message.setEditable(false);
+        messField.setColumns(20);
+        messField.setPreferredSize(
+                new Dimension(messField.getPreferredSize().width, send_message.getPreferredSize().height));
+
+        message_panel.add(messField);
+        message_panel.add(send_message);
+        main_panel.add(mScrollPane);
+        mScrollPane.setPreferredSize(new Dimension(720, 360));
+        main_panel.add(message_panel);
+
+        this.add(main_panel);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(true);
+
+        try {
+            StartClient();
+        } catch (UnknownHostException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        if(e.getSource() == moreButton){
-            settingForOneToOneWindow more_chat = new settingForOneToOneWindow();
-        }
     }
+
+
+
+    public JTextField getMessField() {
+        return messField;
+    }
+
+    public JTextArea getDisplay_message() {
+        return display_message;
+    }
+
     public class Client__ {
         private Socket socket;
         private BufferedReader bufferedReader;
@@ -96,7 +123,7 @@ public class chatting extends JFrame implements ActionListener {
 
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         try{
-                            bufferedWriter.write(username + ": "+ sendText.getText());
+                            bufferedWriter.write(username + ": "+ messField.getText());
                             bufferedWriter.newLine();
                             bufferedWriter.flush();
 
@@ -151,7 +178,17 @@ public class chatting extends JFrame implements ActionListener {
             }
         }
     }
+
+    public void StartClient() throws UnknownHostException, IOException{
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your name: ");
+        String username = scanner.nextLine();
+        Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
+        Client__ client__ = new Client__(socket, username);
+        client__.sendMessage();
+        client__.listenforMessage();
+    }
     public static void main(String[] args) {
-        chatting dialog = new chatting();
+        new UI_Client();
     }
 }

@@ -7,6 +7,8 @@ import loginWindow.loginWindow;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.time.LocalDate;
@@ -53,12 +55,15 @@ public class registerWindow extends JFrame {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Calendar calendar = Calendar.getInstance();
-                String date = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                Date now = new Date();
+                String date = formatter.format(now);
+
                 int check = UserController.Register(Username.getText(), Email.getText(), password.getText(), 0, date);
-                System.out.println(check);
-                dispose();
-                list_friend_nearly loginWindow = new list_friend_nearly();
+                if (check == 1) {
+                    dispose();
+                    list_friend_nearly loginWindow = new list_friend_nearly();
+                }
             }
         });
     }

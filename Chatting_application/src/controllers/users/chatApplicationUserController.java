@@ -13,6 +13,7 @@ public class chatApplicationUserController {
     private static connectData DB = new connectData();;
 
     public int Register(String user_name, String email,String password, int state, String establish){
+        System.out.println(establish);
         String pass = HashingPass.getSecurePassword(password);
         String query = "insert into Users (user_id, user_name, email, password, state, establish) values(NEWID(),?,?,?,?,?)";
         try {
