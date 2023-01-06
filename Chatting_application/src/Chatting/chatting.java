@@ -62,28 +62,21 @@ public class chatting extends JFrame implements ActionListener {
         Chatting.setPreferredSize(new Dimension(640, 480));
         scrollChat.setMinimumSize(new Dimension(100, 0));
 
-        this.Email = Email;
-        String idUser = UserController.searchUser(Email).getString(1);
-        ResultSet friendList = friendController.searchFriend(idUser);
-
         listUserOnl.setLayout(new GridLayout(1,-1,5,5));
         listOnl.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         listOnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        String user_id = userController.searchUser(Email).getString(1);
-        ResultSet rs = friendController.searchFriend(user_id);
-        String checkEmail= null;
-        friendListGUI friend = null;
-        do{
-            ResultSet userAsFriend = userController.searchUserById(rs.getString(2));
-            friend = new friendListGUI(userAsFriend.getString(1));
-            friend.setHoTen(userAsFriend.getString(2));
-            friendListGUIS.add(friend);
-        }while (rs.next());
-        
-
-        for(int i = 0; i < 5; i++){
-            listUserOnl.add(new panelWrapUser("","hihi").wrap_group());
+        this.Email = Email;
+        String idUser = null;
+        try {
+            idUser = UserController.searchUser(Email).getString(1);
+            ResultSet friendList = friendController.searchFriend(idUser);
+            do {
+                ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
+                listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
+            }while (friendList.next());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         listGroup.setLayout(new GridLayout(-1,1,5,5));
@@ -126,6 +119,15 @@ public class chatting extends JFrame implements ActionListener {
             panel.add(userName);
             panel.setSize(150, 50);
             panel.setBorder(blackline);
+            user.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    bodyPanel.removeAll();
+                    bodyPanel.validate();
+                    bodyPanel.repaint();
+                    System.out.println(idUser);
+                }
+            });
             return panel;
         }
     }
