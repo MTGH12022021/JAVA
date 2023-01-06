@@ -5,6 +5,8 @@ import settingForAppWindow.settingForAppWindow;
 import settingForOneToOneWindow.settingForOneToOneWindow;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,18 +29,25 @@ public class chatting extends JFrame implements ActionListener {
     private JPanel Chatting;
     private JScrollPane scrollChat;
     private JButton user;
-    private JLabel staticOnl;
     private JButton iconButton;
     private JButton fileButton;
     private JTextField sendText;
     private JPanel bodyPanel;
+    private JPanel wrap_user;
+    private JPanel listUserOnl;
+    private JPanel Header;
+    private JScrollPane listOnl;
+    private JPanel leftHeader;
+    private JPanel accountUser;
+    private JPanel listGroup;
+    private JScrollPane scrollGroup;
     private JButton buttonOK;
     private GridBagConstraints gbc = new GridBagConstraints();
     private int count = 0;
 
     public chatting() {
         setContentPane(contentPane);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(700,600);
         setVisible(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -46,7 +55,18 @@ public class chatting extends JFrame implements ActionListener {
 
         Chatting.setPreferredSize(new Dimension(640, 480));
         scrollChat.setMinimumSize(new Dimension(100, 0));
-
+        listUserOnl.setLayout(new GridLayout(1,-1,5,5));
+        listOnl.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        listOnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        for(int i = 0; i < 10; i++){
+            listUserOnl.add(wrap_user("user"));
+        }
+        listGroup.setLayout(new GridLayout(-1,1,5,5));
+        scrollGroup.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollGroup.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        for(int i = 0; i < 10; i++){
+            listGroup.add(wrap_group("user"));
+        }
         user.addActionListener(this);
         moreButton.addActionListener(this);
         try {
@@ -54,6 +74,35 @@ public class chatting extends JFrame implements ActionListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public JPanel wrap_user(String name ){
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+//        JLabel Stactic = new JLabel(Static);
+
+        JPanel panel = new JPanel(new GridLayout(3,1));
+        JButton user = new JButton("icon");
+        user.setSize(100,50);
+        JLabel userName = new JLabel(name);
+
+//        panel.add(Stactic);
+        panel.add(user);
+        panel.add(userName);
+        panel.setBorder(blackline);
+        return panel;
+    }
+    public JPanel wrap_group(String name){
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+        JPanel panel = new JPanel(new GridLayout(1,2));
+
+        JButton user = new JButton("icon");
+        user.setSize(100,50);
+        JLabel userName = new JLabel(name);
+
+        panel.add(user);
+        panel.add(userName);
+        panel.setSize(150,50);
+        panel.setBorder(blackline);
+        return panel;
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == user){
