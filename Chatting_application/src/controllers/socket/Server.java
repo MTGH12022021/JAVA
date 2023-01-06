@@ -42,6 +42,5 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(1234);
         Server server = new Server(serverSocket);
         server.StartServer();
-
     }
 }

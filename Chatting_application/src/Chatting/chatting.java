@@ -69,16 +69,19 @@ public class chatting extends JFrame implements ActionListener {
         private BufferedWriter bufferedWriter;
         private String username;
         private String type = "group";
-        private String IdReceive = "a";
-        private String IdUser = "";
+        private String idReceive = "a";
+        private String idUser = "";
 
         //todo Khởi tạo client socket
-        public Client__(Socket socket,String username){
+        public Client__(Socket socket, String idUser, String username,String type, String idReceive){
             try{
                 this.socket = socket;
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
+                this.idUser = idUser;
                 this.username = username;
+                this.type = type;
+                this.idReceive = idReceive;
             }catch(IOException e){
                 closeEverything(this.socket, bufferedReader, bufferedWriter);
             }
@@ -90,7 +93,7 @@ public class chatting extends JFrame implements ActionListener {
         //todo hàm gửi tin nhắn
         public void sendMessage(){
             try {
-                bufferedWriter.write(username);
+                bufferedWriter.write(idUser + "/" + username  +"/ " + type);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             } catch (IOException e1) {
@@ -113,7 +116,7 @@ public class chatting extends JFrame implements ActionListener {
                         try{
                             //sử dụng mã để phân biệt đang nhăn tin với user hay group truoc dau / la loai tin nhan (gui cho user hay group)
                             // sau / la id nguoi nhan (hoac la ten nguoi nhan)
-                            String message  = type + "/"+ IdReceive +"/ " + username + ": " + sendText.getText();
+                            String message  = type + "/"+ idReceive +"/ " + username + ": " + sendText.getText();
                             bufferedWriter.write(message);
                             bufferedWriter.newLine();
                             bufferedWriter.flush();
@@ -166,7 +169,6 @@ public class chatting extends JFrame implements ActionListener {
                                 gbc.gridy = count;
                                 gbc.weightx = 0.1;
                                 gbc.anchor = GridBagConstraints.WEST;
-
                                 bodyPanel.add(Left.getChatleft(), gbc);
                                 bodyPanel.revalidate();
                                 bodyPanel.repaint();
@@ -180,9 +182,7 @@ public class chatting extends JFrame implements ActionListener {
             }).start();
         }
         public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
-
             try {
-
                 if (socket != null) {
                     socket.close();
                 }
@@ -199,10 +199,16 @@ public class chatting extends JFrame implements ActionListener {
     }
     public void StartClient() throws IOException{
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your name: ");
+        System.out.println("Nhap id: ");
+        String idUser = scanner.nextLine();
+        System.out.println("Nhap name: ");
         String username = scanner.nextLine();
+        System.out.println("Nhap loai nhan tin: ");
+        String type = scanner.nextLine();
+        System.out.println("Nhap nguoi nhan: ");
+        String idReceive = scanner.nextLine();
         Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-        Client__ client__ = new Client__(socket, username);
+        Client__ client__ = new Client__(socket,idUser, username, type, idReceive);
         client__.sendMessage();
         client__.listenforMessage();
     }

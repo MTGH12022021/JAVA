@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ClientHandler implements Runnable {
@@ -18,24 +16,27 @@ public class ClientHandler implements Runnable {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientname;
-    private String type;
-    private String id;
+    private String typeClient;
+    private String idClient;
 
 
     public ClientHandler(Socket socket) {
-
         try {
             this.socket = socket;
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
-            this.clientname = bufferedReader.readLine();
+            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
+            String informationClient = bufferedReader.readLine();
+            int indexIdAndUserName = informationClient.indexOf("/");
+            int indexUserNameAndType = informationClient.indexOf("/ ");
+            this.idClient = informationClient.substring(0, indexIdAndUserName);
+            this.clientname = informationClient.substring(indexIdAndUserName+ 1, indexUserNameAndType);
+            this.typeClient = informationClient.substring(indexUserNameAndType + 2, informationClient.length());
+            System.out.println(this.idClient + " " + this.clientname + " " + this.typeClient);
             JTextField message = new JTextField();
             clientHandlers.add(this);
-
         } catch (IOException e) {
             closeEverything(this.socket, bufferedReader, bufferedWriter);
         }
-
     }
 
     @Override
@@ -54,16 +55,17 @@ public class ClientHandler implements Runnable {
 
     public void message_transfer(JTextField message) {
         String mess = message.getText();
-        int indexTypeAndId = mess.indexOf("/");
-        int indexIdAndMess = mess.indexOf("/ ");
-        String type = mess.substring(0,indexTypeAndId);
-        String IdReceive = mess.substring(indexTypeAndId+1, indexIdAndMess);
-        mess  = mess.substring(indexIdAndMess+2, mess.length());
-        System.out.println(indexIdAndMess + "  " + indexTypeAndId);
+        int indexTypeAndIdReceive = mess.indexOf("/");
+        int indexIdReceiveAndMess = mess.indexOf("/ ");
+        String type = mess.substring(0,indexTypeAndIdReceive);
+        String IdReceive = mess.substring(indexTypeAndIdReceive+1, indexIdReceiveAndMess);
+        mess  = mess.substring(indexIdReceiveAndMess+2, mess.length());
+        System.out.println(type+"/"+IdReceive);
         for (ClientHandler clientHandler : clientHandlers) {
-            if (!clientHandler.clientname.equals(this.clientname)) {
+            if (!clientHandler.idClient.equals(this.idClient)) {
                 if(type.equals("user")){
-                    if(clientHandler.clientname.equals(IdReceive)) {
+                    if(clientHandler.idClient.equals(IdReceive) && clientHandler.typeClient.equals("user")) {
+                        System.out.println(clientHandler.typeClient);
                         try {
                             clientHandler.bufferedWriter.write(mess);
                             clientHandler.bufferedWriter.newLine();
@@ -72,7 +74,8 @@ public class ClientHandler implements Runnable {
                             closeEverything(this.socket, bufferedReader, bufferedWriter);
                         }
                     }
-                }else if(type.equals("group")){
+                }else if(type.equals("group") && clientHandler.typeClient.equals("group")){
+
                     try {
                         clientHandler.bufferedWriter.write(mess);
                         clientHandler.bufferedWriter.newLine();
@@ -96,7 +99,6 @@ public class ClientHandler implements Runnable {
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         removeHandlers();
         try {
-
             if (socket != null) {
                 socket.close();
             }
