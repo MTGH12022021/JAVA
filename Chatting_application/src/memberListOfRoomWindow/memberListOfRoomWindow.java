@@ -11,14 +11,23 @@ public class memberListOfRoomWindow {
     public static String[] name = {"Volvo", "BMW", "Ford", "Mazda"};
     static String url = System.getProperty("user.dir")+"/src/memberListOfRoomWindow/temp_avatar.jpg";
     public static String[] urls = {url, url, url, url};
-    public JPanel newPersonPanel(String url, String name) throws IOException {
+    public static String[] isAd = {"1", "0", "1", "0"};
+    public JPanel newPersonPanel(String url, String name, String isAd) throws IOException {
         JPanel newPanel = new JPanel();
-        newPanel.setLayout(new BorderLayout());
+        newPanel.setLayout(new GridLayout(1, 4));
         BufferedImage myPicture = ImageIO.read(new File(url));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         JLabel nameLabel = new JLabel(name);
-        newPanel.add(picLabel, BorderLayout.WEST);
-        newPanel.add(nameLabel, BorderLayout.CENTER);
+        JLabel adminLabel = new JLabel("");
+        if(isAd.equals("1")){
+            adminLabel.setText("Admin");
+        }
+        JButton deleteButton = new JButton("Delete from this room");
+        newPanel.add(picLabel);
+        newPanel.add(nameLabel);
+        newPanel.add(adminLabel);
+        newPanel.add(deleteButton);
+
         return newPanel;
     }
     public memberListOfRoomWindow(){
@@ -41,7 +50,7 @@ public class memberListOfRoomWindow {
         showUserField.setLayout(new GridLayout(4, 1));
         try {
             for(int i=0; i<4; i++){
-                showUserField.add(newPersonPanel(urls[i], name[i]));
+                showUserField.add(newPersonPanel(urls[i], name[i], isAd[i]));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
