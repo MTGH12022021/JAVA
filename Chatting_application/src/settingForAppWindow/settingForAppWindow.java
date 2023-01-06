@@ -39,7 +39,7 @@ public class settingForAppWindow extends JFrame implements ActionListener {
         }
         if(e.getSource() == friendListButton){
 
-            friendListWindow fr = new friendListWindow();
+            friendListWindow fr = new friendListWindow(Email);
         }
         if(e.getSource() == friendInvitationsButton){
 
