@@ -1,11 +1,9 @@
 package Chatting;
 
-<<<<<<< HEAD
 import UserChatting.chatLeft;
 import controllers.users.chatApplicationUserController;
-=======
 import UserChatting.messageChat;
->>>>>>> 2885de4c5fcfad40b5fcd61c145db89853d6b9b0
+
 import settingForAppWindow.settingForAppWindow;
 import settingForOneToOneWindow.settingForOneToOneWindow;
 
@@ -54,7 +52,7 @@ public class chatting extends JFrame implements ActionListener {
     private chatApplicationUserController UserController = new chatApplicationUserController();
     public chatting(String Email) {
         setContentPane(contentPane);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(700,600);
         setVisible(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -62,9 +60,9 @@ public class chatting extends JFrame implements ActionListener {
 
         Chatting.setPreferredSize(new Dimension(640, 480));
         scrollChat.setMinimumSize(new Dimension(100, 0));
-<<<<<<< HEAD
+
         this.Email = Email;
-=======
+
         listUserOnl.setLayout(new GridLayout(1,-1,5,5));
         listOnl.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         listOnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -77,7 +75,7 @@ public class chatting extends JFrame implements ActionListener {
         for(int i = 0; i < 10; i++){
             listGroup.add(wrap_group("user"));
         }
->>>>>>> 2885de4c5fcfad40b5fcd61c145db89853d6b9b0
+
         user.addActionListener(this);
         moreButton.addActionListener(this);
         try {
@@ -132,24 +130,21 @@ public class chatting extends JFrame implements ActionListener {
         private String idReceive = "a";
         private String idUser = "";
 
-<<<<<<< HEAD
-        public Client__(Socket socket){
-=======
         //todo Khởi tạo client socket
-        public Client__(Socket socket, String idUser, String username,String type, String idReceive){
->>>>>>> 2885de4c5fcfad40b5fcd61c145db89853d6b9b0
+        public Client__(Socket socket){
+
             try{
                 this.socket = socket;
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
-<<<<<<< HEAD
+
                 this.username = UserController.searchUser(Email).getString(2);
-=======
-                this.idUser = idUser;
-                this.username = username;
-                this.type = type;
-                this.idReceive = idReceive;
->>>>>>> 2885de4c5fcfad40b5fcd61c145db89853d6b9b0
+
+//                this.idUser = idUser;
+//
+//                this.type = type;
+//                this.idReceive = idReceive;
+
             }catch(IOException e){
                 closeEverything(this.socket, bufferedReader, bufferedWriter);
             }catch (SQLException e){
@@ -269,23 +264,23 @@ public class chatting extends JFrame implements ActionListener {
     }
     public void StartClient() throws IOException{
         Scanner scanner = new Scanner(System.in);
-<<<<<<< HEAD
+
         //System.out.println("Enter your name: ");
         //String username = scanner.nextLine();
         Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
         Client__ client__ = new Client__(socket);
-=======
-        System.out.println("Nhap id: ");
-        String idUser = scanner.nextLine();
-        System.out.println("Nhap name: ");
-        String username = scanner.nextLine();
-        System.out.println("Nhap loai nhan tin: ");
-        String type = scanner.nextLine();
-        System.out.println("Nhap nguoi nhan: ");
-        String idReceive = scanner.nextLine();
-        Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-        Client__ client__ = new Client__(socket,idUser, username, type, idReceive);
->>>>>>> 2885de4c5fcfad40b5fcd61c145db89853d6b9b0
+
+//        System.out.println("Nhap id: ");
+//        String idUser = scanner.nextLine();
+//        System.out.println("Nhap name: ");
+//        String username = scanner.nextLine();
+//        System.out.println("Nhap loai nhan tin: ");
+//        String type = scanner.nextLine();
+//        System.out.println("Nhap nguoi nhan: ");
+//        String idReceive = scanner.nextLine();
+        //Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
+        //Client__ client__ = new Client__(socket,idUser, username, type, idReceive);
+
         client__.sendMessage();
         client__.listenforMessage();
     }
