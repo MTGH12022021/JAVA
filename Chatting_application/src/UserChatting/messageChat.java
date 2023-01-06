@@ -1,26 +1,40 @@
 package UserChatting;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class chatLeft {
+public class messageChat {
     private JTextArea textArea = new JTextArea();
     private JTextField textChat;
     private JPanel chatleft;
     private JLabel HoTen;
     private JLabel Time;
-    private JButton button1;
-    private JPanel tempPanel;
+    private JTextArea displayMessage;
 
-    public chatLeft (){
+    public messageChat(){
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
 
     }
 
+    public void setHoTen(String hoTen) {
+        HoTen.setText(hoTen);
+    }
+
+    public JPanel getChatleft() {
+        return chatleft;
+    }
+
+    public JTextArea getDisplayMessage() {
+        return displayMessage;
+    }
+
+    public void setTime(String time) {
+        Time.setText(time);
+    }
+
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        JPanel panel = new chatLeft().chatleft;
+        JPanel panel = new messageChat().chatleft;
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -28,7 +42,5 @@ public class chatLeft {
         frame.setSize(288,79);
         frame.setResizable(false);
         frame.setVisible(true);
-
-
     }
 }

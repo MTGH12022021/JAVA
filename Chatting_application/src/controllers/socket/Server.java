@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-
+    //todo các khai biến quan trọng
     private ServerSocket serverSocket;
 
     public Server(ServerSocket serverSocket){
@@ -42,7 +42,5 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(1234);
         Server server = new Server(serverSocket);
         server.StartServer();
-
     }
 }
-
