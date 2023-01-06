@@ -90,4 +90,23 @@ public class chatApplicationUserController {
         }
         return null;
     }
+
+    public ResultSet searchUserById (String user_id) {
+        String query = "select * from Users us where us.user_id = ?";
+        PreparedStatement statement = null;
+
+        try {
+            statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1, user_id);
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                return rs;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
 }

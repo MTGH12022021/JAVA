@@ -42,4 +42,18 @@ public class friendController {
         }
         return null;
     }
+
+    public void deleteFriend (String user_id){
+        String query = "delete from Friends where friend_id = ?" + "\n delete from Friends where user_id = ?";
+
+        System.out.println(user_id);
+        try {
+            PreparedStatement statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1, user_id);
+            statement.setString(2,user_id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
