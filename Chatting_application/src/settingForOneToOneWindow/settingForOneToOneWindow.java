@@ -11,14 +11,14 @@ public class settingForOneToOneWindow extends JFrame implements ActionListener {
     private JButton deleteThisConversationButton;
     private JButton backButton;
     private JLabel userAvatar;
-
-    public settingForOneToOneWindow(){
+    private String Email;
+    public settingForOneToOneWindow(String Email){
         setContentPane(settingOtoO);
         setSize(450, 474);
         setTitle("Setting for chat");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-
+        this.Email = Email;
         backButton.addActionListener(this);
         createAChatRoomButton.addActionListener(this);
         deleteThisConversationButton.addActionListener(this);
@@ -29,7 +29,7 @@ public class settingForOneToOneWindow extends JFrame implements ActionListener {
             dispose();
         }
         if(e.getSource() == createAChatRoomButton){
-           addFriendWithGroup addFr = new addFriendWithGroup();
+           addFriendWithGroup addFr = new addFriendWithGroup(Email);
 
         }
         if(e.getSource() == deleteThisConversationButton){
@@ -40,7 +40,7 @@ public class settingForOneToOneWindow extends JFrame implements ActionListener {
         }
     }
     public static void main(String[] args){
-        settingForOneToOneWindow settingForOneToOneWindow = new settingForOneToOneWindow();
+        //settingForOneToOneWindow settingForOneToOneWindow = new settingForOneToOneWindow();
         //JFrame frame = new JFrame("Setting for chat");
 
     }

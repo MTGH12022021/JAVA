@@ -10,8 +10,22 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 public class chatApplicationUserController {
-    private static connectData DB = new connectData();;
+    private static connectData DB = new connectData();
 
+    public ResultSet showAllUser(){
+        String query = "select * from Users";
+        try {
+            PreparedStatement statement = DB.getConnection().prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                return rs;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
     public int Register(String user_name, String email,String password, int state, String establish){
         System.out.println(establish);
         String pass = HashingPass.getSecurePassword(password);
@@ -35,15 +49,15 @@ public class chatApplicationUserController {
         }
     }
 
-    public boolean Login (String username, String password)
+    public boolean Login (String Email, String password)
     {
 
         String pass = HashingPass.getSecurePassword(password);
-        System.out.println(username + pass);
-        String query = "select * from Users users where users.user_name = ? and users.password = ?";
+        System.out.println(Email + pass);
+        String query = "select * from Users users where users.email = ? and users.password = ?";
         try{
             PreparedStatement statement = DB.getConnection().prepareStatement(query);
-            statement.setString(1, username);
+            statement.setString(1, Email);
             statement.setString(2, pass);
             ResultSet rs = statement.executeQuery();
 
@@ -55,5 +69,25 @@ public class chatApplicationUserController {
             return false;
         }
         return false;
+    }
+
+    public ResultSet searchUser (String Email){
+        String query = "select * from Users us where us.email = ?";
+        PreparedStatement statement = null;
+        System.out.println(Email);
+        try {
+            statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1, Email);
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+
+                return rs;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
     }
 }

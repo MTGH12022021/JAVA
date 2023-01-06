@@ -68,9 +68,7 @@ public class createGroup extends JFrame implements ActionListener {
 
         }
         if(e.getSource() == add){
-            addFriendWithGroup add = new addFriendWithGroup();
-
-
+            //addFriendWithGroup add = new addFriendWithGroup();
         }
     }
     public static void main (String[] args){

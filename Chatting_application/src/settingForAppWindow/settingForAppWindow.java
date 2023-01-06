@@ -18,21 +18,19 @@ public class settingForAppWindow extends JFrame implements ActionListener {
     private JButton changeAvatarButton;
     private JButton logoutButton;
     private JPanel settingForAppPanel;
-
-    public settingForAppWindow(){
+    private String Email;
+    public settingForAppWindow(String Email){
         this.setContentPane(this.settingForAppPanel);
         this.setSize(450, 474);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setTitle("Setting for the app");
         this.setVisible(true);
-
+        this.Email = Email;
         logoutButton.addActionListener(this);
         friendListButton.addActionListener(this);
         friendInvitationsButton.addActionListener(this);
         changeNameButton.addActionListener(this);
         changeAvatarButton.addActionListener(this);
-
-
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == logoutButton){
@@ -45,7 +43,7 @@ public class settingForAppWindow extends JFrame implements ActionListener {
         }
         if(e.getSource() == friendInvitationsButton){
 
-            list_friend_nearly fr_nearly = new list_friend_nearly();
+            list_friend_nearly fr_nearly = new list_friend_nearly(Email);
 
         }
         if(e.getSource() == changeNameButton){
@@ -58,7 +56,7 @@ public class settingForAppWindow extends JFrame implements ActionListener {
         }
     }
     public static void main(String[] args) {
-        settingForAppWindow settingForAppWindow = new settingForAppWindow();
+        //settingForAppWindow settingForAppWindow = new settingForAppWindow();
         //JFrame frame = new JFrame("Setting for account");
 
     }

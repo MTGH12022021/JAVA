@@ -26,7 +26,7 @@ public class loginWindow extends JFrame implements ActionListener {
         this.setSize(450, 474);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        this.setLocationRelativeTo(null);
         Login.addActionListener(this);
         signup.addActionListener(this);
         backButton.addActionListener(this);
@@ -43,11 +43,12 @@ public class loginWindow extends JFrame implements ActionListener {
         }
         if(e.getSource() == Login){
             boolean check = UserController.Login(username.getText(),password.getText());
+
             System.out.println(check);
             if (check) 
             {
                 dispose();
-                chatting chat = new chatting();
+                chatting chat = new chatting(username.getText());
             }
         }
         if(e.getSource() == forgetPasswordButton){

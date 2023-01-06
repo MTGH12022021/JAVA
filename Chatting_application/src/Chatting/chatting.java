@@ -1,6 +1,7 @@
 package Chatting;
 
 import UserChatting.chatLeft;
+import controllers.users.chatApplicationUserController;
 import settingForAppWindow.settingForAppWindow;
 import settingForOneToOneWindow.settingForOneToOneWindow;
 import java.net.UnknownHostException;
@@ -13,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -35,8 +37,9 @@ public class chatting extends JFrame implements ActionListener {
     private JButton buttonOK;
     private GridBagConstraints gbc = new GridBagConstraints();
     private int count = 0;
-
-    public chatting() {
+    String Email;
+    private chatApplicationUserController UserController = new chatApplicationUserController();
+    public chatting(String Email) {
         setContentPane(contentPane);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(700,600);
@@ -46,7 +49,7 @@ public class chatting extends JFrame implements ActionListener {
 
         Chatting.setPreferredSize(new Dimension(640, 480));
         scrollChat.setMinimumSize(new Dimension(100, 0));
-
+        this.Email = Email;
         user.addActionListener(this);
         moreButton.addActionListener(this);
         try {
@@ -57,10 +60,10 @@ public class chatting extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == user){
-            settingForAppWindow set_user = new settingForAppWindow();
+            settingForAppWindow set_user = new settingForAppWindow(Email);
         }
         if(e.getSource() == moreButton){
-            settingForOneToOneWindow more_chat = new settingForOneToOneWindow();
+            settingForOneToOneWindow more_chat = new settingForOneToOneWindow(Email);
         }
     }
     public class Client__ {
@@ -69,13 +72,15 @@ public class chatting extends JFrame implements ActionListener {
         private BufferedWriter bufferedWriter;
         private String username;
 
-        public Client__(Socket socket,String username){
+        public Client__(Socket socket){
             try{
                 this.socket = socket;
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
-                this.username = username;
+                this.username = UserController.searchUser(Email).getString(2);
             }catch(IOException e){
+                closeEverything(this.socket, bufferedReader, bufferedWriter);
+            }catch (SQLException e){
                 closeEverything(this.socket, bufferedReader, bufferedWriter);
             }
         }
@@ -198,10 +203,10 @@ public class chatting extends JFrame implements ActionListener {
     }
     public void StartClient() throws IOException{
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your name: ");
-        String username = scanner.nextLine();
+        //System.out.println("Enter your name: ");
+        //String username = scanner.nextLine();
         Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-        Client__ client__ = new Client__(socket, username);
+        Client__ client__ = new Client__(socket);
         client__.sendMessage();
         client__.listenforMessage();
     }
@@ -308,6 +313,6 @@ public class chatting extends JFrame implements ActionListener {
     }
     */
     public static void main(String[] args) {
-        chatting dialog = new chatting();
+        //chatting dialog = new chatting();
     }
 }
