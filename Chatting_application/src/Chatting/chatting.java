@@ -70,6 +70,7 @@ public class chatting extends JFrame implements ActionListener {
         private String username;
         private String type = "group";
         private String IdReceive = "a";
+        private String IdUser = "";
 
         //todo Khởi tạo client socket
         public Client__(Socket socket,String username){
