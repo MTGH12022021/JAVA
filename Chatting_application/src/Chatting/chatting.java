@@ -1,7 +1,7 @@
 package Chatting;
 
-import UserChatting.chatLeft;
 import controllers.users.chatApplicationUserController;
+import controllers.Friend.friendController;
 import UserChatting.messageChat;
 
 import settingForAppWindow.settingForAppWindow;
@@ -9,7 +9,6 @@ import settingForOneToOneWindow.settingForOneToOneWindow;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +21,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.sql.ResultSet;
 
 public class chatting extends JFrame implements ActionListener {
     private JPanel contentPane;
@@ -50,6 +50,7 @@ public class chatting extends JFrame implements ActionListener {
     private int count = 0;
     String Email;
     private chatApplicationUserController UserController = new chatApplicationUserController();
+    private friendController friendController = new friendController();
     public chatting(String Email) {
         setContentPane(contentPane);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -61,19 +62,28 @@ public class chatting extends JFrame implements ActionListener {
         Chatting.setPreferredSize(new Dimension(640, 480));
         scrollChat.setMinimumSize(new Dimension(100, 0));
 
-        this.Email = Email;
-
         listUserOnl.setLayout(new GridLayout(1,-1,5,5));
         listOnl.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         listOnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        for(int i = 0; i < 10; i++){
-            listUserOnl.add(wrap_user("user"));
+
+        this.Email = Email;
+        String idUser = null;
+        try {
+            idUser = UserController.searchUser(Email).getString(1);
+            ResultSet friendList = friendController.searchFriend(idUser);
+            do {
+                ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
+                listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
+            }while (friendList.next());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
         listGroup.setLayout(new GridLayout(-1,1,5,5));
         scrollGroup.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollGroup.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        for(int i = 0; i < 10; i++){
-            listGroup.add(wrap_group("user"));
+        for(int i = 0; i < 5; i++){
+            listGroup.add(new panelWrapGroup("","hihi").wrap_group());
         }
 
         user.addActionListener(this);
@@ -84,35 +94,73 @@ public class chatting extends JFrame implements ActionListener {
             throw new RuntimeException(e);
         }
     }
-    public JPanel wrap_user(String name ){
-        Border blackline = BorderFactory.createLineBorder(Color.black);
-//        JLabel Stactic = new JLabel(Static);
 
-        JPanel panel = new JPanel(new GridLayout(3,1));
-        JButton user = new JButton("icon");
-        user.setSize(100,50);
-        JLabel userName = new JLabel(name);
+    private class panelWrapUser{
+        private  String idUser;
+        private String name;
 
-//        panel.add(Stactic);
-        panel.add(user);
-        panel.add(userName);
-        panel.setBorder(blackline);
-        return panel;
+        public panelWrapUser(String idUser, String name){
+            this.idUser = idUser;
+            this.name =name;
+        }
+
+        public String getName(){return name;}
+        public String getIdUser(){return idUser;}
+
+        public JPanel wrap_group() {
+            Border blackline = BorderFactory.createLineBorder(Color.black);
+            JPanel panel = new JPanel(new GridLayout(1, 2));
+
+            JButton user = new JButton("icon");
+            user.setSize(100, 50);
+            JLabel userName = new JLabel(name);
+
+            panel.add(user);
+            panel.add(userName);
+            panel.setSize(150, 50);
+            panel.setBorder(blackline);
+            user.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    bodyPanel.removeAll();
+                    bodyPanel.validate();
+                    bodyPanel.repaint();
+                    System.out.println(idUser);
+                }
+            });
+            return panel;
+        }
     }
-    public JPanel wrap_group(String name){
-        Border blackline = BorderFactory.createLineBorder(Color.black);
-        JPanel panel = new JPanel(new GridLayout(1,2));
 
-        JButton user = new JButton("icon");
-        user.setSize(100,50);
-        JLabel userName = new JLabel(name);
+    private class panelWrapGroup{
+        private String idGroup;
+        private String name;
 
-        panel.add(user);
-        panel.add(userName);
-        panel.setSize(150,50);
-        panel.setBorder(blackline);
-        return panel;
+        public panelWrapGroup(String idGroup, String name){
+            this.idGroup = idGroup;
+            this.name = name;
+        }
+
+        public String getName(){return name;}
+        public String getIdGroup(){return idGroup;}
+
+        public JPanel wrap_group() {
+            Border blackline = BorderFactory.createLineBorder(Color.black);
+            JPanel panel = new JPanel(new GridLayout(1, 2));
+
+            JButton user = new JButton("icon");
+            user.setSize(100, 50);
+            JLabel userName = new JLabel(name);
+
+            panel.add(user);
+            panel.add(userName);
+            panel.setSize(150, 50);
+            panel.setBorder(blackline);
+            return panel;
+        }
     }
+
+
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == user){
             settingForAppWindow set_user = new settingForAppWindow(Email);
@@ -121,6 +169,7 @@ public class chatting extends JFrame implements ActionListener {
             settingForOneToOneWindow more_chat = new settingForOneToOneWindow(Email);
         }
     }
+
     public class Client__ {
         private Socket socket;
         private BufferedReader bufferedReader;
