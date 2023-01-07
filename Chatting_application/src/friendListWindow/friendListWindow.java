@@ -16,6 +16,7 @@ public class friendListWindow extends JFrame implements ActionListener {
     private JPanel fiendListPanel;
     private JButton backButton;
     private JPanel mainPanel;
+    private JScrollPane scrollpanel;
     private String Email;
     private ArrayList<friendListGUI> friendListGUIS = new ArrayList<friendListGUI>();
     private controllers.Friend.friendController friendController = new friendController();
@@ -29,6 +30,7 @@ public class friendListWindow extends JFrame implements ActionListener {
         this.Email = email;
         backButton.addActionListener(this);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        scrollpanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         try {
             String user_id = userController.searchUser(Email).getString(1);
             ResultSet rs = friendController.searchFriend(user_id);

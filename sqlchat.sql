@@ -58,6 +58,7 @@ create table MessagesGroup(
 create table Groups(
 	name nvarchar(50),
 	group_id varchar(255) NOT NULL DEFAULT newid() unique,
+	establish date,
 	constraint PK_Groups primary key (group_id),
 )
 
