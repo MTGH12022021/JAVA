@@ -62,7 +62,8 @@ public class registerWindow extends JFrame {
                 int check = UserController.Register(Username.getText(), Email.getText(), password.getText(), 0, date);
                 if (check == 1) {
                     dispose();
-                    list_friend_nearly loginWindow = new list_friend_nearly(Email.getText());
+                    new loginWindow();
+                    //list_friend_nearly loginWindow = new list_friend_nearly(Email.getText());
                 }
             }
         });

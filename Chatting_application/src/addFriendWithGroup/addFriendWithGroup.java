@@ -1,6 +1,7 @@
 package addFriendWithGroup;
 
 import controllers.Friend.friendController;
+import controllers.Group.groupController;
 import controllers.users.chatApplicationUserController;
 
 import javax.swing.*;
@@ -18,7 +19,9 @@ public class addFriendWithGroup extends JFrame implements ActionListener {
     private chatApplicationUserController userController = new chatApplicationUserController();
     private String Email;
     private friendController friendController = new friendController();
+    private groupController groupController = new groupController();
     private ArrayList<showFriend> Friends = new ArrayList<showFriend>();
+    private String user_id;
     public addFriendWithGroup(String Email) {
         setContentPane(contentPane);
         setVisible(true);
@@ -29,7 +32,7 @@ public class addFriendWithGroup extends JFrame implements ActionListener {
         backButton.addActionListener(this);
         bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.Y_AXIS));
         try {
-            String user_id = userController.searchUser(Email).getString(1);
+            user_id = userController.searchUser(Email).getString(1);
             ResultSet rs = friendController.searchFriend(user_id);
             String checkEmail= null;
             showFriend friend = null;
@@ -52,20 +55,16 @@ public class addFriendWithGroup extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == backButton){
-//            for (showFriend friend :Friends){
-//                if(friend.getCheckBox1().isSelected()){
-//                    String user_id = null;
-//                    try {
-//                        user_id = userController.searchUser(Email).getString(1);
-//                        friendController.addFriend(user_id,friend.getUser_id() );
-//                    } catch (SQLException ex) {
-//                        throw new RuntimeException(ex);
-//                    }
-//
-//                }
-        //}
-            dispose();
+            groupController.createGroup();
+            String groupID = groupController.getIdGroup();
+            groupController.addMemberGroup(user_id,groupID);
+            for (showFriend friend :Friends){
+                if(friend.getCheckBox1().isSelected()){
+                    groupController.addMemberGroup(friend.getUser_id(),groupID);
+               }
+            }
         }
+        dispose();
     }
     public static void main(String[] args) {
         //addFriendWithGroup dialog = new addFriendWithGroup();
