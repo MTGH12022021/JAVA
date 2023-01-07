@@ -48,9 +48,11 @@ public class chatting extends JFrame implements ActionListener {
     private JButton buttonOK;
     private GridBagConstraints gbc = new GridBagConstraints();
     private int count = 0;
-    String Email;
+    private String Email;
     private chatApplicationUserController UserController = new chatApplicationUserController();
     private friendController friendController = new friendController();
+    private Client__ client__;
+
     public chatting(String Email) {
         setContentPane(contentPane);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -67,10 +69,10 @@ public class chatting extends JFrame implements ActionListener {
         listOnl.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         this.Email = Email;
-        String idUser = null;
+        ResultSet User;
         try {
-            idUser = UserController.searchUser(Email).getString(1);
-            ResultSet friendList = friendController.searchFriend(idUser);
+             User = UserController.searchUser(Email);
+            ResultSet friendList = friendController.searchFriend(User.getString(1));
             do {
                 ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
                 listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
@@ -89,8 +91,16 @@ public class chatting extends JFrame implements ActionListener {
         user.addActionListener(this);
         moreButton.addActionListener(this);
         try {
-            StartClient();
+            Scanner scanner = new Scanner(System.in);
+            Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
+            client__ = new Client__(socket, User.getString(1), User.getString(2));
+
+
+            client__.sendMessage();
+            client__.listenforMessage();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -126,6 +136,15 @@ public class chatting extends JFrame implements ActionListener {
                     bodyPanel.validate();
                     bodyPanel.repaint();
                     System.out.println(idUser);
+                    client__.setType("user");
+                    client__.setIdReceive(idUser);
+                    try {
+                        client__.bufferedWriter.write("**"+ idUser + "/" + client__.getUsername()  +"/ " + client__.getType());
+                        client__.bufferedWriter.newLine();
+                        client__.bufferedWriter.flush();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
             return panel;
@@ -173,30 +192,24 @@ public class chatting extends JFrame implements ActionListener {
     public class Client__ {
         private Socket socket;
         private BufferedReader bufferedReader;
-        private BufferedWriter bufferedWriter;
-        private String username;
-        private String type = "group";
-        private String idReceive = "a";
+        public BufferedWriter bufferedWriter;
+        private String username ="";
+        private String type = "";
+        private String idReceive = "";
         private String idUser = "";
 
         //todo Khởi tạo client socket
-        public Client__(Socket socket){
+        public Client__(Socket socket, String idUser, String username){
 
             try{
                 this.socket = socket;
                 this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
 
-                this.username = UserController.searchUser(Email).getString(2);
-
-//                this.idUser = idUser;
-//
-//                this.type = type;
-//                this.idReceive = idReceive;
+                this.username = username;
+                this.idUser = idUser;
 
             }catch(IOException e){
-                closeEverything(this.socket, bufferedReader, bufferedWriter);
-            }catch (SQLException e){
                 closeEverything(this.socket, bufferedReader, bufferedWriter);
             }
         }
@@ -204,10 +217,15 @@ public class chatting extends JFrame implements ActionListener {
         public void send (String message){
 
         }
+        public String getType(){return type;}
+        public String getUsername(){return username;}
+        public void setType(String type){this.type = type;}
+        public void setIdReceive(String idReceive){this.idReceive = idReceive;}
+
         //todo hàm gửi tin nhắn
         public void sendMessage(){
             try {
-                bufferedWriter.write(idUser + "/" + username  +"/ " + type);
+                bufferedWriter.write("**"+idUser + "/" + username  +"/ " + type);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             } catch (IOException e1) {
@@ -311,28 +329,28 @@ public class chatting extends JFrame implements ActionListener {
             }
         }
     }
-    public void StartClient() throws IOException{
-        Scanner scanner = new Scanner(System.in);
-
-        //System.out.println("Enter your name: ");
-        //String username = scanner.nextLine();
-        Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-        Client__ client__ = new Client__(socket);
-
-//        System.out.println("Nhap id: ");
-//        String idUser = scanner.nextLine();
-//        System.out.println("Nhap name: ");
-//        String username = scanner.nextLine();
-//        System.out.println("Nhap loai nhan tin: ");
-//        String type = scanner.nextLine();
-//        System.out.println("Nhap nguoi nhan: ");
-//        String idReceive = scanner.nextLine();
-        //Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-        //Client__ client__ = new Client__(socket,idUser, username, type, idReceive);
-
-        client__.sendMessage();
-        client__.listenforMessage();
-    }
+//    public void StartClient() throws IOException{
+//        Scanner scanner = new Scanner(System.in);
+//
+//        //System.out.println("Enter your name: ");
+//        //String username = scanner.nextLine();
+//        Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
+//        Client__ client__ = new Client__(socket);
+//
+////        System.out.println("Nhap id: ");
+////        String idUser = scanner.nextLine();
+////        System.out.println("Nhap name: ");
+////        String username = scanner.nextLine();
+////        System.out.println("Nhap loai nhan tin: ");
+////        String type = scanner.nextLine();
+////        System.out.println("Nhap nguoi nhan: ");
+////        String idReceive = scanner.nextLine();
+//        //Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
+//        //Client__ client__ = new Client__(socket,idUser, username, type, idReceive);
+//
+//        client__.sendMessage();
+//        client__.listenforMessage();
+//    }
 
     public static void main(String[] args) {
         //chatting dialog = new chatting();

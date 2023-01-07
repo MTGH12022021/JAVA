@@ -28,7 +28,7 @@ public class ClientHandler implements Runnable {
             String informationClient = bufferedReader.readLine();
             int indexIdAndUserName = informationClient.indexOf("/");
             int indexUserNameAndType = informationClient.indexOf("/ ");
-            this.idClient = informationClient.substring(0, indexIdAndUserName);
+            this.idClient = informationClient.substring(2, indexIdAndUserName);
             this.clientname = informationClient.substring(indexIdAndUserName+ 1, indexUserNameAndType);
             this.typeClient = informationClient.substring(indexUserNameAndType + 2, informationClient.length());
             System.out.println(this.idClient + " " + this.clientname + " " + this.typeClient);
@@ -45,7 +45,19 @@ public class ClientHandler implements Runnable {
         while (socket.isConnected()) {
             try {
                 receiveMessage.setText(bufferedReader.readLine());
-                message_transfer(receiveMessage);
+                if(receiveMessage.getText().startsWith("**")) {
+                    System.out.println("fhjsdkfdsjkjdslj");
+                    String informationClient = receiveMessage.getText();
+                    int indexIdAndUserName = informationClient.indexOf("/");
+                    int indexUserNameAndType = informationClient.indexOf("/ ");
+//                    this.idClient = informationClient.substring(2, indexIdAndUserName);
+//                    this.clientname = informationClient.substring(indexIdAndUserName + 1, indexUserNameAndType);
+                    this.typeClient = informationClient.substring(indexUserNameAndType + 2, informationClient.length());
+                    System.out.println(this.idClient + " " + this.clientname + " " + this.typeClient);
+                }else{
+                    System.out.println("hello");
+                    message_transfer(receiveMessage);
+                }
             } catch (IOException e) {
                 closeEverything(this.socket, bufferedReader, bufferedWriter);
                 break;
@@ -62,11 +74,15 @@ public class ClientHandler implements Runnable {
         mess  = mess.substring(indexIdReceiveAndMess+2, mess.length());
         System.out.println(type+"/"+IdReceive);
         for (ClientHandler clientHandler : clientHandlers) {
+
             if (!clientHandler.idClient.equals(this.idClient)) {
+                System.out.println(clientHandler.idClient +"//"+ clientHandler.typeClient);
+                System.out.println(type);
                 if(type.equals("user")){
                     if(clientHandler.idClient.equals(IdReceive) && clientHandler.typeClient.equals("user")) {
                         System.out.println(clientHandler.typeClient);
                         try {
+                            System.out.println("cc");
                             clientHandler.bufferedWriter.write(mess);
                             clientHandler.bufferedWriter.newLine();
                             clientHandler.bufferedWriter.flush();
@@ -75,7 +91,6 @@ public class ClientHandler implements Runnable {
                         }
                     }
                 }else if(type.equals("group") && clientHandler.typeClient.equals("group")){
-
                     try {
                         clientHandler.bufferedWriter.write(mess);
                         clientHandler.bufferedWriter.newLine();
