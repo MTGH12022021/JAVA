@@ -71,10 +71,12 @@ public class chatting extends JFrame implements ActionListener {
         try {
             idUser = UserController.searchUser(Email).getString(1);
             ResultSet friendList = friendController.searchFriend(idUser);
-            do {
-                ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
-                listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
-            }while (friendList.next());
+            if(friendList != null) {
+                do {
+                    ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
+                    listUserOnl.add(new panelWrapUser(friendList.getString(2), userAsFriend.getString(2)).wrap_group());
+                } while (friendList.next());
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

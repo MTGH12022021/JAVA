@@ -1,4 +1,4 @@
-package registerWindow;
+package listUser;
 
 import controllers.users.chatApplicationUserController;
 import listFriendNearly.list_friend_nearly;
@@ -8,51 +8,30 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.time.LocalDate;
-public class registerWindow extends JFrame {
+
+public class addUserByAdmin extends JFrame{
     private chatApplicationUserController UserController ;
+    private JPanel registerPanel;
     private JTextField nickname;
     private JTextField Username;
     private JTextField password;
     private JTextField Email;
+    private JTextField textField1;
     private JRadioButton male;
     private JRadioButton female;
-    private JTextField textField1;
-    private JButton signUpButton;
-    private JButton loginButton;
-    private JPanel registerPanel;
+    private JButton ADDButton;
 
-    //    public registerWindow(JFrame parent){
-//        super(parent);
-//        setTitle("Register");
-//        setContentPane(registerPanel);
-//        setMinimumSize(new Dimension(450, 474));
-//        setModal(true);
-//        setLocationRelativeTo(parent);
-//        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        setVisible(true);
-//    }
-    public registerWindow(){
+    public addUserByAdmin(){
         UserController = new chatApplicationUserController();
 
         this.setContentPane(this.registerPanel);
-        this.setTitle("Register");
+        this.setTitle("Add User");
         this.setSize(450, 474);
         this.setVisible(true);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //todo button login process
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                loginWindow loginWindow = new loginWindow();
-            }
-        });
-        //todo button register process
-        signUpButton.addActionListener(new ActionListener() {
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        ADDButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -73,10 +52,4 @@ public class registerWindow extends JFrame {
             }
         });
     }
-    public static void main(String[] args) {
-        //registerWindow registerWindow = new registerWindow(null);
-        registerWindow windowL = new registerWindow();
-
-    }
-
 }

@@ -19,7 +19,10 @@ create table Users (
 	email nvarchar(50) unique,
 	password nvarchar(50),
 	state int,
+	lockout int,
 	establish date,
+	ngaysinh date,
+	gioitinh nvarchar(3),
 	constraint PK_USER primary key (user_id),
 );
 
@@ -42,6 +45,7 @@ create table MessagesFriend(
 	message_content nvarchar(200),
 	validate int,
 	times time,
+	friend_id varchar(255) NOT NULL,
 	constraint PK_MessagesFriend primary key (message_id),
 );
 
@@ -98,6 +102,11 @@ references Users(user_id)
 alter table MessagesFriend
 add constraint FK_MessagesFriend_Users
 foreign key (user_id)
+references Users(user_id)
+
+alter table MessagesFriend
+add constraint FK_MessagesFriend_friend_Users
+foreign key (friend_id)
 references Users(user_id)
 
 --MessagesGroup

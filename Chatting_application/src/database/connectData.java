@@ -19,7 +19,7 @@ public class connectData {
                 + ";encrypt=true;trustServerCertificate=true;";
         user = System.getenv("USER");
         pass = System.getenv("PASSWORD");
-        System.out.println(user + pass);
+
         try {
             connection = DriverManager.getConnection(URL, user, pass);
             System.out.println("Connect ");

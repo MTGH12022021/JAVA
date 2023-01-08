@@ -1,6 +1,7 @@
 package loginAdmin;
 
 import HomeAdmin.home_admin;
+import controllers.admin.adminController;
 import homeAdminUser.Home_admin_user;
 
 import javax.swing.*;
@@ -12,16 +13,16 @@ import java.awt.event.ActionListener;
 public class login_admin extends JFrame implements ActionListener {
     private JPanel panel1;
     private JLabel username, password;
-    private JTextField user_text, pw_text;
+    private JTextField user_text;
     private JButton login, forget_pw, back;
-
+    private JPasswordField pw_text;
     private JLabel title;
-
+    private adminController AdminController = new adminController();
     public login_admin() {
         add(CreateUI());
         setTitle("Login admin");
-        setSize(500, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(720, 500);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -33,10 +34,10 @@ public class login_admin extends JFrame implements ActionListener {
         // title
         JPanel header = new JPanel();
         header.setLayout(new GridLayout(3, 2, 20, 20));
-        username = new JLabel("Username");
+        username = new JLabel("Email");
         user_text = new JTextField();
         password = new JLabel("Password");
-        pw_text = new JTextField();
+        pw_text = new JPasswordField();
 
         login = new JButton("Login");
         login.addActionListener(this);
@@ -64,8 +65,16 @@ public class login_admin extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
-            this.dispose();
-            new home_admin();
+            boolean check= AdminController.loginAdmin(user_text.getText(),pw_text.getText());
+            System.out.println(check);
+            if (check) {
+                new home_admin();
+                this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Đăng nhập sai");
+            }
+
         }
         if (e.getSource() == forget_pw) {
 

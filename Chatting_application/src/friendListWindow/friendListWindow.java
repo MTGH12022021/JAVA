@@ -36,12 +36,14 @@ public class friendListWindow extends JFrame implements ActionListener {
             ResultSet rs = friendController.searchFriend(user_id);
             String checkEmail= null;
             friendListGUI friend = null;
-            do{
-                ResultSet userAsFriend = userController.searchUserById(rs.getString(2));
-                friend = new friendListGUI(userAsFriend.getString(1));
-                friend.setHoTen(userAsFriend.getString(2));
-                friendListGUIS.add(friend);
-            }while (rs.next());
+            if (rs!=null) {
+                do {
+                    ResultSet userAsFriend = userController.searchUserById(rs.getString(2));
+                    friend = new friendListGUI(userAsFriend.getString(1));
+                    friend.setHoTen(userAsFriend.getString(2));
+                    friendListGUIS.add(friend);
+                } while (rs.next());
+            }
         }catch (SQLException e) {
             e.printStackTrace();
         }

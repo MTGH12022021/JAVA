@@ -11,32 +11,36 @@ import java.util.Date;
 
 public class groupController {
     private static connectData DB = new connectData();
-    private static int count = 1;
+    private int count = 1;
     public void createGroup (){
         String query = "insert into Groups (name,group_id,establish) values (?,newid(),?)";
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         Date now = new Date();
         String date = formatter.format(now);
         try {
-            PreparedStatement statement = DB.getConnection().prepareStatement(query);
+            PreparedStatement statement = DB.getConnection().prepareStatement("select * from Groups");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                count++;
+            }
+            statement = DB.getConnection().prepareStatement(query);
             statement.setString(1,"Group " + Integer.toString(count));
             statement.setString(2, date);
             statement.executeUpdate();
-            count++;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public String getIdGroup (){
-        String query = "select * from Groups";
+        String query = "select * from Groups order by Groups.name desc";
         String idGroup = null;
         try {
             PreparedStatement statement = DB.getConnection().prepareStatement(query);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()){
-                idGroup = rs.getString(2);
-            }
+            rs.next();
+            System.out.println(rs.getString(2));
+            idGroup = rs.getString(2);
             return idGroup;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,6 +56,26 @@ public class groupController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
+    public void deleteMemberGroup (String user_id){
+        String query = "delete from MemberGroup where user_id = ?";
+        try {
+            PreparedStatement statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1,user_id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void deleteMessageGroup (String user_id) {
+        String query = "delete from MessagesGroup where user_id = ?";
+        try {
+            PreparedStatement statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1,user_id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
