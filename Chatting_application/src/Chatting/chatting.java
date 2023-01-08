@@ -1,5 +1,8 @@
 package Chatting;
 
+
+import controllers.Message.messageGroup;
+import controllers.Message.messageFriend;
 import controllers.users.chatApplicationUserController;
 import controllers.Friend.friendController;
 import UserChatting.messageChat;
@@ -51,9 +54,11 @@ public class chatting extends JFrame implements ActionListener {
     private String Email;
     private chatApplicationUserController UserController = new chatApplicationUserController();
     private friendController friendController = new friendController();
-    private Client__ client__;
+    private messageGroup messGroup = new messageGroup();
+    private messageFriend messFriend = new messageFriend();
+    private final Client__ client__;
 
-    public chatting(String Email) {
+    public chatting(String Email) throws SQLException {
         setContentPane(contentPane);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(700,600);
@@ -71,12 +76,14 @@ public class chatting extends JFrame implements ActionListener {
         this.Email = Email;
         ResultSet User;
         try {
-             User = UserController.searchUser(Email);
+            User = UserController.searchUser(Email);
             ResultSet friendList = friendController.searchFriend(User.getString(1));
-            do {
+            if(friendList != null){
+                 do {
                 ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
                 listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
             }while (friendList.next());
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -84,10 +91,18 @@ public class chatting extends JFrame implements ActionListener {
         listGroup.setLayout(new GridLayout(-1,1,5,5));
         scrollGroup.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollGroup.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        for(int i = 0; i < 5; i++){
-            listGroup.add(new panelWrapGroup("","hihi").wrap_group());
+        try {
+            ResultSet groupList = messGroup.listGroup(User.getString(1));
+            if(groupList != null) {
+                do {
+                    listGroup.add(new panelWrapGroup(groupList.getString(2), groupList.getString(3)).wrap_group());
+                } while (groupList.next());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
+        user.setText(User.getString(2));
         user.addActionListener(this);
         moreButton.addActionListener(this);
         try {
@@ -98,16 +113,14 @@ public class chatting extends JFrame implements ActionListener {
 
             client__.sendMessage();
             client__.listenforMessage();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private class panelWrapUser{
-        private  String idUser;
-        private String name;
+        private final String idUser;
+        private final String name;
 
         public panelWrapUser(String idUser, String name){
             this.idUser = idUser;
@@ -135,9 +148,58 @@ public class chatting extends JFrame implements ActionListener {
                     bodyPanel.removeAll();
                     bodyPanel.validate();
                     bodyPanel.repaint();
-                    System.out.println(idUser);
+                    peopleButton.setText(name);
                     client__.setType("user");
                     client__.setIdReceive(idUser);
+
+                    //load lai tin nhan cu
+                    ResultSet oldMessage = messFriend.loadMessage(client__.idUser, idUser);
+
+
+                    if(oldMessage != null) {
+                        try {
+                            do {
+                                String msg = oldMessage.getString("message_content");
+                                if (oldMessage.getInt("validate") == 1) {
+                                    int specialCharacter = msg.indexOf(":");
+                                    messageChat textRight = new messageChat();
+                                    messageChat Left = new messageChat();
+                                    Left.getDisplayMessage().setText(msg.substring(specialCharacter + 2, msg.length()));
+                                    Left.setTime(oldMessage.getString("times"));
+                                    Left.setHoTen(msg.substring(0, specialCharacter));
+                                    gbc.gridx = 0;
+                                    gbc.gridy = count;
+                                    gbc.weightx = 0.1;
+                                    gbc.anchor = GridBagConstraints.WEST;
+                                    bodyPanel.add(Left.getChatleft(), gbc);
+                                    bodyPanel.revalidate();
+                                    bodyPanel.repaint();
+                                    count++;
+                                }
+                                else {
+                                    int specialCharacter = msg.indexOf(":");
+                                    messageChat textRight = new messageChat();
+                                    messageChat Right = new messageChat();
+                                    Right.getDisplayMessage().setText(msg.substring(specialCharacter + 2, msg.length()));
+                                    Right.setTime(oldMessage.getString("times"));
+                                    Right.setHoTen(msg.substring(0, specialCharacter));
+                                    gbc.gridx = 0;
+                                    gbc.gridy = count;
+                                    gbc.weightx = 0.1;
+                                    gbc.anchor = GridBagConstraints.EAST;
+                                    bodyPanel.add(Right.getChatleft(), gbc);
+                                    bodyPanel.revalidate();
+                                    bodyPanel.repaint();
+                                    count++;
+                                }
+
+                            } while (oldMessage.next());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+
+                    // chuyen thong tin di
                     try {
                         client__.bufferedWriter.write("**"+ idUser + "/" + client__.getUsername()  +"/ " + client__.getType());
                         client__.bufferedWriter.newLine();
@@ -167,14 +229,80 @@ public class chatting extends JFrame implements ActionListener {
             Border blackline = BorderFactory.createLineBorder(Color.black);
             JPanel panel = new JPanel(new GridLayout(1, 2));
 
-            JButton user = new JButton("icon");
-            user.setSize(100, 50);
+            JButton group = new JButton("icon");
+            group.setSize(100, 50);
             JLabel userName = new JLabel(name);
 
-            panel.add(user);
+            panel.add(group);
             panel.add(userName);
             panel.setSize(150, 50);
             panel.setBorder(blackline);
+
+           group.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                    bodyPanel.removeAll();
+                    bodyPanel.validate();
+                    bodyPanel.repaint();
+                    peopleButton.setText(name);
+                    client__.setType("group");
+                    client__.setIdReceive(idGroup);
+                    //load lai tin nhan cu
+                    ResultSet oldMessage = messGroup.loadMessage(client__.idUser, idGroup);
+
+
+                    if(oldMessage != null) {
+                        try {
+                            do {
+                                String msg = oldMessage.getString("message_content");
+                                if (oldMessage.getInt("validate") == 0) {
+                                    int specialCharacter = msg.indexOf(":");
+                                    messageChat textRight = new messageChat();
+                                    messageChat Left = new messageChat();
+                                    Left.getDisplayMessage().setText(msg.substring(specialCharacter + 2, msg.length()));
+                                    Left.setTime(oldMessage.getString("times"));
+                                    Left.setHoTen(msg.substring(0, specialCharacter));
+                                    gbc.gridx = 0;
+                                    gbc.gridy = count;
+                                    gbc.weightx = 0.1;
+                                    gbc.anchor = GridBagConstraints.WEST;
+                                    bodyPanel.add(Left.getChatleft(), gbc);
+                                    bodyPanel.revalidate();
+                                    bodyPanel.repaint();
+                                    count++;
+                                }
+                                else {
+                                    int specialCharacter = msg.indexOf(":");
+                                    messageChat textRight = new messageChat();
+                                    messageChat Right = new messageChat();
+                                    Right.getDisplayMessage().setText(msg.substring(specialCharacter + 2, msg.length()));
+                                    Right.setTime(oldMessage.getString("times"));
+                                    Right.setHoTen(msg.substring(0, specialCharacter));
+                                    gbc.gridx = 0;
+                                    gbc.gridy = count;
+                                    gbc.weightx = 0.1;
+                                    gbc.anchor = GridBagConstraints.EAST;
+                                    bodyPanel.add(Right.getChatleft(), gbc);
+                                    bodyPanel.revalidate();
+                                    bodyPanel.repaint();
+                                    count++;
+                                }
+
+                            } while (oldMessage.next());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    // chuyen thong tin di
+                    try {
+                        client__.bufferedWriter.write("**"+ idGroup + "/" + client__.getUsername()  +"/ " + client__.getType());
+                        client__.bufferedWriter.newLine();
+                        client__.bufferedWriter.flush();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+               }
+           });
             return panel;
         }
     }
@@ -288,23 +416,32 @@ public class chatting extends JFrame implements ActionListener {
                         try{
                             msgFromCharGroup = bufferedReader.readLine();
                             if (msgFromCharGroup != null) {
-                                int specialCharacter = msgFromCharGroup.indexOf(":");
-                                messageChat textRight= new messageChat();
-                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                                Date now = new Date();
-                                String date = formatter.format(now);
-                                messageChat Left = new messageChat();
-                                Left.getDisplayMessage().setText(msgFromCharGroup.substring(specialCharacter+2, msgFromCharGroup.length()));
-                                Left.setTime(date);
-                                Left.setHoTen(msgFromCharGroup.substring(0,specialCharacter));
-                                gbc.gridx = 0;
-                                gbc.gridy = count;
-                                gbc.weightx = 0.1;
-                                gbc.anchor = GridBagConstraints.WEST;
-                                bodyPanel.add(Left.getChatleft(), gbc);
-                                bodyPanel.revalidate();
-                                bodyPanel.repaint();
-                                count++;
+                                //phan tich de tranh nhan cung luc nhieu tin nhan tu nguoi gui
+                                System.out.println(msgFromCharGroup);
+                                int indexIdSenderAndMess = msgFromCharGroup.indexOf("/");
+                                String idSender = msgFromCharGroup.substring(0, indexIdSenderAndMess);
+
+                                if (idSender.equals(idReceive)) {
+                                    String mess = msgFromCharGroup.substring(indexIdSenderAndMess+1, msgFromCharGroup.length());
+                                    System.out.println(mess);
+                                    int specialCharacter = mess.indexOf(":");
+                                    messageChat textRight = new messageChat();
+                                    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                                    Date now = new Date();
+                                    String date = formatter.format(now);
+                                    messageChat Left = new messageChat();
+                                    Left.getDisplayMessage().setText(mess.substring(specialCharacter + 2, mess.length()));
+                                    Left.setTime(date);
+                                    Left.setHoTen(mess.substring(0, specialCharacter));
+                                    gbc.gridx = 0;
+                                    gbc.gridy = count;
+                                    gbc.weightx = 0.1;
+                                    gbc.anchor = GridBagConstraints.WEST;
+                                    bodyPanel.add(Left.getChatleft(), gbc);
+                                    bodyPanel.revalidate();
+                                    bodyPanel.repaint();
+                                    count++;
+                                }
                             }
                         }catch(IOException e){
                             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -329,28 +466,7 @@ public class chatting extends JFrame implements ActionListener {
             }
         }
     }
-//    public void StartClient() throws IOException{
-//        Scanner scanner = new Scanner(System.in);
-//
-//        //System.out.println("Enter your name: ");
-//        //String username = scanner.nextLine();
-//        Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-//        Client__ client__ = new Client__(socket);
-//
-////        System.out.println("Nhap id: ");
-////        String idUser = scanner.nextLine();
-////        System.out.println("Nhap name: ");
-////        String username = scanner.nextLine();
-////        System.out.println("Nhap loai nhan tin: ");
-////        String type = scanner.nextLine();
-////        System.out.println("Nhap nguoi nhan: ");
-////        String idReceive = scanner.nextLine();
-//        //Socket socket = new Socket(InetAddress.getLocalHost(), 1234);
-//        //Client__ client__ = new Client__(socket,idUser, username, type, idReceive);
-//
-//        client__.sendMessage();
-//        client__.listenforMessage();
-//    }
+
 
     public static void main(String[] args) {
         //chatting dialog = new chatting();

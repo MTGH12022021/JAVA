@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import controllers.Message.messageFriend;
+
 public class Server {
     //todo các khai biến quan trọng
     private ServerSocket serverSocket;
@@ -20,7 +22,6 @@ public class Server {
                 System.out.println("Connect request is accepted...");
 
                 ClientHandler clientHandler = new ClientHandler(socket);
-
                 Thread thread = new Thread(clientHandler);
                 thread.start();
             }
