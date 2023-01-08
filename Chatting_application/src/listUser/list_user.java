@@ -27,7 +27,6 @@ public class list_user extends JFrame implements ActionListener {
 
     private JTable table = new JTable();
     private JPanel footerPanel = new JPanel();
-
     private JButton addUser = new JButton("ADD");
     private JButton searchUser = new JButton("SEARCH");
     public list_user() {

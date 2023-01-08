@@ -62,9 +62,13 @@ public class chatApplicationUserController {
             statement.setString(1, Email);
             statement.setString(2, pass);
             ResultSet rs = statement.executeQuery();
-
             if (rs.next()){
-                return true;
+                if  (rs.getInt(6) == 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }catch (SQLException e){
             e.printStackTrace();

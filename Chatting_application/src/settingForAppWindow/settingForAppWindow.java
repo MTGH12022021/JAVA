@@ -22,7 +22,7 @@ public class settingForAppWindow extends JFrame implements ActionListener {
     public settingForAppWindow(String Email){
         this.setContentPane(this.settingForAppPanel);
         this.setSize(450, 474);
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Setting for the app");
         this.setVisible(true);
         this.Email = Email;

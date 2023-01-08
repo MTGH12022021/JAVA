@@ -58,10 +58,11 @@ public class friendController {
     }
 
     public void deleteMessagesFriend (String user_id) {
-        String query = "delete from MessagesFriend where user_id = ?";
+        String query = "delete from MessagesFriend where user_id = ?" + "\ndelete from MessagesFriend where friend_id = ?";
         try {
             PreparedStatement statement = DB.getConnection().prepareStatement(query);
             statement.setString(1,user_id);
+            statement.setString(2,user_id);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

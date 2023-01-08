@@ -80,10 +80,10 @@ public class chatting extends JFrame implements ActionListener {
             User = UserController.searchUser(Email);
             ResultSet friendList = friendController.searchFriend(User.getString(1));
             if(friendList != null){
-                 do {
-                ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
-                listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
-            }while (friendList.next());
+                do {
+                    ResultSet userAsFriend = UserController.searchUserById(friendList.getString(2));
+                    listUserOnl.add(new panelWrapUser(friendList.getString(2),userAsFriend.getString(2)).wrap_group());
+                }while (friendList.next());
 
             }
         } catch (SQLException e) {
@@ -240,9 +240,9 @@ public class chatting extends JFrame implements ActionListener {
             panel.setSize(150, 50);
             panel.setBorder(blackline);
 
-           group.addActionListener(new ActionListener() {
-               @Override
-               public void actionPerformed(ActionEvent e) {
+            group.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     bodyPanel.removeAll();
                     bodyPanel.validate();
                     bodyPanel.repaint();
@@ -303,15 +303,22 @@ public class chatting extends JFrame implements ActionListener {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-               }
-           });
+                }
+            });
             return panel;
         }
     }
 
-
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == user){
+            this.dispose();
+            try {
+                client__.bufferedWriter.write("/quit");
+                client__.bufferedWriter.newLine();
+                client__.bufferedWriter.flush();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             settingForAppWindow set_user = new settingForAppWindow(Email);
         }
         if(e.getSource() == moreButton){
@@ -361,7 +368,7 @@ public class chatting extends JFrame implements ActionListener {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            //todo gửi tin nhắn đến cho serer xử lý 
+            //todo gửi tin nhắn đến cho serer xử lý
             sendText.addKeyListener(new KeyListener(){
                 @Override
                 public void keyTyped(KeyEvent e) {

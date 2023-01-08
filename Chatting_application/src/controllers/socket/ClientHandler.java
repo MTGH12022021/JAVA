@@ -53,6 +53,9 @@ public class ClientHandler implements Runnable {
         while (socket.isConnected()) {
             try {
                 receiveMessage.setText(bufferedReader.readLine());
+                if(receiveMessage.getText().startsWith("/quit")){
+                    closeEverything(this.socket, bufferedReader, bufferedWriter);
+                }
                 if(receiveMessage.getText().startsWith("**")) {
                     String informationClient = receiveMessage.getText();
                     int indexIdAndUserName = informationClient.indexOf("/");
@@ -69,7 +72,7 @@ public class ClientHandler implements Runnable {
                         throw new RuntimeException(e);
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 try {
                     closeEverything(this.socket, bufferedReader, bufferedWriter);
                 } catch (SQLException ex) {
@@ -92,6 +95,7 @@ public class ClientHandler implements Runnable {
         ResultSet memberGroup = null;
 
         for (ClientHandler clientHandler : clientHandlers) {
+            System.out.println("hihi");
             if (!clientHandler.idClient.equals(this.idClient)) {
                 System.out.println("hihi");
                 if (type.equals("user")) {
