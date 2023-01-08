@@ -10,6 +10,7 @@ import forgetPasswordWindow.forgetPasswordWindow;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class loginWindow extends JFrame implements ActionListener {
     private JTextField username;
@@ -48,7 +49,11 @@ public class loginWindow extends JFrame implements ActionListener {
             if (check) 
             {
                 dispose();
-                chatting chat = new chatting(username.getText());
+                try {
+                    chatting chat = new chatting(username.getText());
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
         if(e.getSource() == forgetPasswordButton){

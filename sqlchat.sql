@@ -25,6 +25,8 @@ create table Users (
 	gioitinh nvarchar(3),
 	constraint PK_USER primary key (user_id),
 );
+ALTER TABLE Users
+ALTER COLUMN establish datetime;
 
 create table ChatHistory(
 	user_id varchar(255) NOT NULL,
@@ -40,24 +42,28 @@ create table Friends(
 );
 
 create table MessagesFriend(
-	user_id varchar(255) NOT NULL,
-	message_id varchar(255) NOT NULL DEFAULT newid() unique,
-	message_content nvarchar(200),
-	validate int,
-	times time,
-	friend_id varchar(255) NOT NULL,
-	constraint PK_MessagesFriend primary key (message_id),
+    user_id varchar(255) NOT NULL,
+    friend_id varchar(255) NOT NULL,
+    message_id varchar(255) NOT NULL DEFAULT newid() unique,
+    message_content nvarchar(200),
+    validate int,
+    times time,
+    constraint PK_MessagesFriend primary key (message_id),
 );
+ALTER TABLE MessagesFriend
+ALTER COLUMN times datetime;
 
 create table MessagesGroup(
-	user_id varchar(255) NOT NULL,
-	group_id varchar(255) NOT NULL,
-	message_id varchar(255) NOT NULL DEFAULT newid() unique,
-	message_content nvarchar(200),
-	validate int,
-	times time,
-	constraint PK_MessagesGroup primary key (message_id),
+    user_id varchar(255) NOT NULL,
+    group_id varchar(255) NOT NULL,
+    message_id varchar(255) NOT NULL DEFAULT newid() unique,
+    message_content nvarchar(200),
+    validate int,
+    times time,
+    constraint PK_MessagesGroup primary key (message_id),
 );
+ALTER TABLE MessagesGroup
+ALTER COLUMN times datetime;
 
 create table Groups(
 	name nvarchar(50),

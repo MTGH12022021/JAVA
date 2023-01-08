@@ -57,6 +57,7 @@ public class groupController {
             throw new RuntimeException(e);
         }
     }
+
     public void deleteMemberGroup (String user_id){
         String query = "delete from MemberGroup where user_id = ?";
         try {
@@ -79,3 +80,5 @@ public class groupController {
     }
 
 }
+
+

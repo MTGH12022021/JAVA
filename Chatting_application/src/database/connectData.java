@@ -6,19 +6,25 @@ import java.sql.SQLException;
 
 
 public class connectData {
-    private Connection connection;
+    private static Connection connection;
     private String user;
     private String pass;
 
     public connectData() {
         connection = null;
-        user = "";
-        pass = "";
+        user = "sa";
+        pass = "Han12022021";
         String databasename = "ChatApplication";
         String URL = "jdbc:sqlserver://localhost:1433;databaseName=" + databasename
                 + ";encrypt=true;trustServerCertificate=true;";
-        user = System.getenv("USER");
-        pass = System.getenv("PASSWORD");
+
+        user = "sa";
+        pass = "lehoai123";
+
+
+//        user = System.getenv("USER");
+//        pass = System.getenv("PASSWORD");
+        System.out.println(user + pass);
 
         try {
             connection = DriverManager.getConnection(URL, user, pass);
@@ -32,6 +38,4 @@ public class connectData {
 
         return connection;
     }
-
-
 }

@@ -46,8 +46,7 @@ public class addUserByAdmin extends JFrame{
                 int check = UserController.Register(Username.getText(), Email.getText(), password.getText(), 0, 1,date, textField1.getText(),gioitinh );
                 if (check == 1) {
                     dispose();
-                    new loginWindow();
-                    list_friend_nearly loginWindow = new list_friend_nearly(Email.getText());
+                    JOptionPane.showMessageDialog(null, "Thêm thành công");
                 }
             }
         });

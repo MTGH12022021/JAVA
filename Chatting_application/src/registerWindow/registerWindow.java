@@ -68,7 +68,6 @@ public class registerWindow extends JFrame {
                 if (check == 1) {
                     dispose();
                     new loginWindow();
-                    list_friend_nearly loginWindow = new list_friend_nearly(Email.getText());
                 }
             }
         });
