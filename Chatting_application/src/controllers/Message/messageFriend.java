@@ -54,4 +54,20 @@ public class messageFriend {
         }
         return null;
     }
+
+    public boolean deleteMessage(String idUser, String idFriend){
+          String query = "DELETE mf FROM MessagesFriend mf WHERE mf.user_id = ? and mf.friend_id = ?";
+          PreparedStatement statement = null;
+        try {
+            statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1,idUser);
+            statement.setString(2,idFriend);
+
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

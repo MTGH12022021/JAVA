@@ -123,4 +123,21 @@ public class messageGroup {
         }
         return null;
     }
+
+    public boolean deleteMessage(String idUser, String idGroup){
+          System.out.println(idUser +"/////" + idGroup);
+          String query = "DELETE mg FROM MessagesGroup mg WHERE mg.user_id = ? and mg.group_id = ?";
+          PreparedStatement statement = null;
+        try {
+            statement = DB.getConnection().prepareStatement(query);
+            statement.setString(1,idUser);
+            statement.setString(2,idGroup);
+
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

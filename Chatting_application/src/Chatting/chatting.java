@@ -313,7 +313,7 @@ public class chatting extends JFrame implements ActionListener {
             settingForAppWindow set_user = new settingForAppWindow(Email);
         }
         if(e.getSource() == moreButton){
-            settingForOneToOneWindow more_chat = new settingForOneToOneWindow(Email);
+            settingForOneToOneWindow more_chat = new settingForOneToOneWindow(Email, client__.idReceive, client__.type);
         }
     }
 
